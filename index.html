@@ -1,203 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>SVP Protocol | Semantic Vector Governance</title>
-    <meta name="title" content="SVP Protocol | Semantic Vector Governance">
-    <meta name="description" content="Deterministic Semantic Governance layer for Autonomous Agentic Systems. Mitigating risks in critical infrastructure.">
+name: Kernel Live Audit
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows you to run it manually
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gokuljayaprakash8.github.io/SVP-Semantic-Vector-Protocol-KERNEL/">
-    <meta property="og:title" content="SVP Protocol | Semantic Vector Governance">
-    <meta property="og:description" content="Deterministic execution layer for bridging probabilistic LLM outputs and deterministic system requirements.">
-
-    <style>
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --muted: #666666;
-            --border: #e1e1e1;
-            --code-bg: #f6f8fa;
-            --accent: #0070f3;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #000000;
-                --text: #ffffff;
-                --muted: #a1a1a1;
-                --border: #222222;
-                --code-bg: #0a0a0a;
-            }
-        }
-        body {
-            font-family: -apple-system, "SF Pro Display", "Inter", sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6; /* Increased for readability */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            -webkit-font-smoothing: antialiased;
-        }
-        .container {
-            max-width: 680px;
-            width: 100%;
-            padding: 100px 24px;
-        }
-        header {
-            margin-bottom: 72px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 32px;
-        }
-        h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: 0.05em; /* Elite spacing */
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-        .status-badge {
-            font-family: "SF Mono", monospace;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 6px 10px;
-            border-radius: 2px;
-        }
-        section {
-            margin-bottom: 56px;
-        }
-        h2 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--muted);
-            margin-bottom: 24px;
-        }
-        p {
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            color: var(--text);
-        }
-        .spec-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 32px;
-        }
-        @media (min-width: 600px) {
-            .spec-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        .spec-item h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-        .spec-item p {
-            font-size: 0.85rem;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-        .code-block {
-            font-family: "SF Mono", "Fira Code", monospace;
-            background: var(--code-bg);
-            padding: 20px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            line-height: 1.7;
-            overflow-x: auto;
-            border: 1px solid var(--border);
-            color: var(--muted);
-        }
-        .code-block span {
-            color: var(--text);
-            font-weight: 500;
-        }
-        footer {
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border);
-            font-size: 0.7rem;
-            color: var(--muted);
-            font-family: "SF Mono", monospace;
-            letter-spacing: 0.02em;
-        }
-        a { 
-            color: var(--muted); 
-            text-decoration: none; 
-            border-bottom: 1px solid var(--border);
-            transition: color 0.2s, border-color 0.2s;
-        }
-        a:hover { 
-            color: var(--text); 
-            border-bottom-color: var(--text); 
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <header>
-        <h1>SVP Kernel</h1>
-        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 28px;">Deterministic Semantic Governance for Autonomous Agentic Systems.</p>
-        <span class="status-badge">Kernel_v1.0.4 // Status: Verified</span>
-    </header>
-
-    <section>
-        <h2>Abstract</h2>
-        <p>
-            The SVP Kernel is a security-first execution layer designed to bridge the gap between probabilistic Large Language Model (LLM) outputs and deterministic system requirements. By enforcing semantic guardrails at the kernel level, we mitigate the risks of unauthorized agentic actions in critical infrastructure.
-        </p>
-    </section>
-
-    <section>
-        <h2>Architecture</h2>
-        <div class="spec-grid">
-            <div class="spec-item">
-                <h3>01. Invariants</h3>
-                <p>O(1) complexity quantitative bounds. Hard-coded validation for transaction volume and computational depth.</p>
-            </div>
-            <div class="spec-item">
-                <h3>02. Vector Mapping</h3>
-                <p>384-dimensional embedding analysis. Adversarial intent detection via Cosine Similarity thresholds.</p>
-            </div>
-            <div class="spec-item">
-                <h3>03. Integrity</h3>
-                <p>Cryptographically hashed execution traces for immutable regulatory and forensic reporting.</p>
-            </div>
-            <div class="spec-item">
-                <h3>04. Interfaces</h3>
-                <p>Modular SDK for high-frequency finance, cloud DevOps, and autonomous logistics.</p>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2>Status Logs</h2>
-        <div class="code-block">
-            > Initializing SVP_Core... <span>SUCCESS</span><br>
-            > Loading Embedding_Model: <span>all-MiniLM-L6-v2</span><br>
-            > Setting Semantic_Threshold: <span>0.65</span><br>
-            > Invariants: <span>ENFORCED</span><br>
-            > Governance_State: <span>READY</span>
-        </div>
-    </section>
-
-    <footer>
-        <p>
-            REF: SVP-01 / RELEASE: 2026<br>
-            MAINTAINER: GOKUL JAYAPRAKASH<br>
-            PUDUCHERRY / GLOBAL / <a href="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL">SOURCE_CODE</a>
-        </p>
-    </footer>
-</div>
-
-</body>
-</html>
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: pip install sentence-transformers
+      - name: Run Governance Engine
+        run: python myengine.py
+      - name: Commit Updated Logs
+        run: |
+          git config --global user.name 'SVP-Kernel-Bot'
+          git config --global user.email 'bot@svp.kernel'
+          git add logs.json
+          git commit -m "Automated Audit: Update Telemetry" || exit 0
+          git push
+          
