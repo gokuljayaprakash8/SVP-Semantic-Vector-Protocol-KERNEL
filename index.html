@@ -3,123 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SVP Kernel | Deterministic Governance</title>
+    <title>SVP Protocol | Semantic Vector Governance</title>
     <style>
         :root {
-            --bg-color: #05070a;
-            --text-color: #c9d1d9;
-            --accent-color: #58a6ff;
-            --border-color: #30363d;
-            --success-color: #238636;
-            --card-bg: #0d1117;
+            --bg: #ffffff;
+            --text: #000000;
+            --muted: #666666;
+            --border: #e1e1e1;
+            --code-bg: #f6f8fa;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --text: #ffffff;
+                --muted: #a1a1a1;
+                --border: #333333;
+                --code-bg: #1a1a1a;
+            }
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: -apple-system, "SF Pro Display", "Inter", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
         }
         .container {
-            max-width: 850px;
+            max-width: 700px;
             width: 100%;
-            padding: 60px 20px;
+            padding: 80px 24px;
         }
         header {
-            text-align: center;
-            padding-bottom: 50px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 50px;
+            margin-bottom: 64px;
         }
         h1 {
-            color: #ffffff;
-            font-size: 3rem;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
-        .tagline {
-            font-size: 1.3rem;
-            color: #8b949e;
-            max-width: 600px;
-            margin: 0 auto;
+        .status-badge {
+            font-family: "SF Mono", "Roboto Mono", monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 4px;
         }
-        .badge-container {
-            margin-top: 25px;
-        }
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: #000;
-            padding: 14px 28px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 700;
-            margin-top: 30px;
-            transition: transform 0.2s;
-        }
-        .section {
-            margin-bottom: 60px;
+        section {
+            margin-bottom: 48px;
         }
         h2 {
-            color: #ffffff;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 15px;
-            margin-bottom: 25px;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
         }
-        .feature-grid {
+        p {
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .spec-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 25px;
+            gap: 24px;
         }
         @media (min-width: 600px) {
-            .feature-grid {
+            .spec-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
-        .feature-card {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+        .spec-item h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
-        .stat-box {
-            font-family: 'Courier New', Courier, monospace;
-            background: #000;
-            color: #00ff41;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
+        .spec-item p {
+            font-size: 0.875rem;
+            color: var(--muted);
         }
-        .manifesto-text {
-            font-size: 1.1rem;
-            font-style: italic;
-            color: #acbac7;
-            background: linear-gradient(90deg, #161b22, #0d1117);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px dashed var(--border-color);
-        }
-        .roadmap-item {
-            border-left: 2px solid var(--accent-color);
-            padding-left: 25px;
-            margin-bottom: 25px;
-            position: relative;
+        .code-block {
+            font-family: "SF Mono", monospace;
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            border: 1px solid var(--border);
         }
         footer {
-            margin-top: auto;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #8b949e;
-            width: 100%;
-            border-top: 1px solid var(--border-color);
-            background: #0d1117;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-family: "SF Mono", monospace;
         }
+        a { color: var(--text); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -127,67 +115,59 @@
 <div class="container">
     <header>
         <h1>SVP KERNEL</h1>
-        <p class="tagline">The Universal Execution Layer for Autonomous Agents.</p>
-        
-        <div class="badge-container">
-            <img src="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL/actions/workflows/security_audit.yml/badge.svg" alt="Audit Status">
-            <span style="margin-left:10px; color:var(--success-color); font-weight:bold;">● DETERMINISTIC LOCK ACTIVE</span>
-        </div>
-
-        <a href="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL" class="cta-button">EXPLORE CORE LOGIC</a>
+        <p style="color: var(--muted); margin-bottom: 24px;">Deterministic Semantic Governance for Autonomous Agentic Systems.</p>
+        <span class="status-badge">Build: 2026.02.11 / Status: Verified</span>
     </header>
 
-    <div class="section">
-        <h2>Live Governance Telemetry</h2>
-        <div class="stat-box">
-            [BOOT] SVP-KERNEL-v1.0.4<br>
-            [LOG] SECURING FINANCIAL INVARIANTS... OK<br>
-            [LOG] MONITORING SEMANTIC VECTOR SPACE... OK<br>
-            [LOG] 100% DETERMINISTIC ENFORCEMENT ACTIVE.
-        </div>
-    </div>
+    <section>
+        <h2>Abstract</h2>
+        <p>
+            The SVP Kernel is a security-first execution layer designed to bridge the gap between probabilistic Large Language Model (LLM) outputs and deterministic system requirements. By enforcing semantic guardrails at the kernel level, we mitigate the risks of unauthorized agentic actions in critical infrastructure.
+        </p>
+    </section>
 
-    <div class="section">
+    <section>
+        <h2>Protocol Architecture</h2>
+        <div class="spec-grid">
+            <div class="spec-item">
+                <h3>I. Invariant Enforcement</h3>
+                <p>Hard-coded quantitative limits on system calls. Zero-latency validation of transaction values, frequency, and computational depth.</p>
+            </div>
+            <div class="spec-item">
+                <h3>II. Vector Mapping</h3>
+                <p>High-dimensional embedding analysis using 384-dimensional semantic space to detect adversarial intent via Cosine Similarity.</p>
+            </div>
+            <div class="spec-item">
+                <h3>III. Audit Integrity</h3>
+                <p>Cryptographically hashed execution traces ensuring immutable forensic logs for multi-industry regulatory compliance.</p>
+            </div>
+            <div class="spec-item">
+                <h3>IV. Universal Interface</h3>
+                <p>Modular integration for finance, cloud infrastructure, and autonomous logistics robotics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
         <h2>Technical Specification</h2>
-        <div class="feature-card" style="margin-bottom: 20px;">
-            <h3>Layer 1: Hard Invariants</h3>
-            <p>Quantitative bounds on critical variables ($Value, $Latency, $Volume). No probabilistic drift permitted.</p>
+        <div class="code-block">
+            > Initializing SVP_Core...<br>
+            > Loading Embedding_Model: all-MiniLM-L6-v2<br>
+            > Setting Semantic_Threshold: 0.65<br>
+            > Hard_Invariants: ACTIVE<br>
+            > Governance_State: ENFORCED
         </div>
-        <div class="feature-card">
-            <h3>Layer 2: Semantic Mapping</h3>
-            <p>Transforming intent into high-dimensional vector coordinates. Measuring safety via Cosine Similarity thresholds ($\cos(\theta) < 0.65$).</p>
-        </div>
-    </div>
+    </section>
 
-    <div class="section">
-        <h2>Extended Description: The Founder's Manifesto</h2>
-        <div class="manifesto-text">
-            "The future of the global economy belongs to agents, but the control of that economy must remain human. We are entering an era where AI can reason, but it must not be allowed to act without an immutable constitution. <br><br>
-            SVP Kernel is that constitution. Built as a zero-trust governance gateway, it ensures that every action taken by an autonomous system is verified against a set of deterministic laws. We don't just filter words; we govern intent. This is the foundation for a safe, scalable, and autonomous billion-dollar solo-enterprise."
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Strategic Roadmap</h2>
-        <div class="roadmap-item">
-            <strong>PHASE I: AGENTIC FINANCE</strong>
-            <p>Securing high-frequency financial agent workflows in Silicon Valley and NYC.</p>
-        </div>
-        <div class="roadmap-item">
-            <strong>PHASE II: GLOBAL INFRASTRUCTURE</strong>
-            <p>Deploying the SVP Protocol to govern autonomous power grids and logistics networks.</p>
-        </div>
-        <div class="roadmap-item" style="border-left: 2px solid var(--success-color);">
-            <strong>PHASE III: UNIVERSAL ALIGNMENT</strong>
-            <p>Establishing the global standard for human-machine safety protocols.</p>
-        </div>
-    </div>
+    <footer>
+        <p>
+            DOCUMENT: SVP-01 / VERSION: 1.0.4<br>
+            AUTHOR: GOKUL JAYAPRAKASH<br>
+            REPOSITORY: <a href="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL">SOURCE_CODE</a><br>
+            PUDUCHERRY / GLOBAL
+        </p>
+    </footer>
 </div>
-
-<footer>
-    <p>SVP Kernel © 2026. Designed and Built by Gokul Jayaprakash.</p>
-    <p>Puducherry • Silicon Valley • The Future</p>
-</footer>
 
 </body>
 </html>
