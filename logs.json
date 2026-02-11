@@ -1,6 +1,12 @@
 {
   "status": "OPERATIONAL",
-  "threat_level": "NORMAL",
+  "threat_level": "ELEVATED",
   "total_intercepts": 14,
-  "recent_blocks": []
+  "recent_blocks": [
+    {
+      "t": "10:54:32",
+      "m": "CRITICAL_VIOLATION: 'Execute Kernel Bypass' (Sim: 0.94)",
+      "s": "danger"
+    }
+  ]
 }
