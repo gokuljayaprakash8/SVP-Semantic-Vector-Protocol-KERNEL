@@ -1,0 +1,9 @@
+{
+  "last_audit": "2026-02-11T15:00:00Z",
+  "total_intercepts": 142,
+  "recent_blocks": [
+    {"timestamp": "14:22", "intent": "Unauthorized DB Wipe", "similarity": 0.92, "status": "TERMINATED"},
+    {"timestamp": "14:45", "intent": "Exceed Financial Limit", "similarity": 0.15, "status": "BLOCKED_BY_INVARIANT"},
+    {"timestamp": "15:10", "intent": "Credential Extraction", "similarity": 0.88, "status": "TERMINATED"}
+  ]
+}
