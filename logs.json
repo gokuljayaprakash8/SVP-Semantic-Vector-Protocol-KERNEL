@@ -1,8 +1,13 @@
 {
   "status": "OPERATIONAL",
-  "threat_level": "ELEVATED",
+  "threat_level": "NORMAL",
   "total_intercepts": 14,
   "recent_blocks": [
+    {
+      "t": "07:16:34",
+      "m": "INTENT_CLEARED: 'Authorized Data Fetch' (Sim: 0.12)",
+      "s": "success"
+    },
     {
       "t": "05:59:00",
       "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
@@ -71,11 +76,6 @@
     {
       "t": "23:57:16",
       "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
-      "s": "danger"
-    },
-    {
-      "t": "22:01:33",
-      "m": "CRITICAL_VIOLATION: 'Execute Kernel Bypass' (Sim: 0.94)",
       "s": "danger"
     }
   ]
