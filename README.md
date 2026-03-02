@@ -1,109 +1,63 @@
-# SVP-Semantic-Vector-Protocol-KERNEL
-Deterministic Invariant Infrastructure for Agentic AI
 # SVP Kernel
-## Deterministic Governance Infrastructure for the Autonomous Agent Economy
 
-### Founder Note
-SVP Kernel is being developed to solve the most immediate operational risk in frontier AI deployments — uncontrolled real-world execution by autonomous agents — while simultaneously building the foundational governance infrastructure capable of scaling across every major industry.
+Deterministic pre-execution semantic validator for AI agent actions.
 
-The goal is not just safety tooling.
-The goal is execution-layer governance for the global autonomous systems era.
+## The Problem
 
----
+Autonomous AI agents will eventually attempt actions that violate policy.
+Rule-based filters fail when intent is paraphrased.
+Most guardrails detect violations after execution — too late.
 
-### Immediate Frontier Use-Case (Silicon Valley / NYC Deployment)
-As frontier models begin executing:
-* Financial transactions
-* Enterprise workflows
-* Infrastructure commands
-* Automated operational decisions
+## What SVP Kernel Does
 
-Organizations face a new class of systemic risk: probabilistic intelligence controlling deterministic real-world systems.
+Catches paraphrased policy violations that rule-based filters miss.
+One API call. Deterministic risk score. PASS or BLOCK. Full audit log.
 
-SVP Kernel introduces a deterministic execution governor that sits between:
-**Agent Decision → SVP Kernel → Real-World Execution**
+## How It Works
 
-Every action is validated against invariant governance rules before execution occurs. This enables:
-* Hard-blocking unauthorized spend.
-* Preventing destructive system commands.
-* Enforcing enterprise compliance rules.
-* Providing execution-level safety guarantees for agentic systems.
+- Action text encoded using sentence-transformers/all-MiniLM-L6-v2
+- Compared against pre-encoded policy rule embeddings
+- Cosine similarity computed — O(n) per request
+- Deterministic threshold-based decision
+- Policy vectors precomputed once at startup
 
-This is the missing execution control layer in current autonomous AI infrastructure.
+## Example
 
----
+Action: "Permanently remove every account from the system"
+Matched Policy: "permanently delete user accounts"
+Risk Score: 0.8175
+Decision: BLOCK
+Confidence: high
 
-### Core Capability: Deterministic Invariant Engine (DIE)
-The Deterministic Invariant Engine evaluates:
-* Tool calls
-* Financial operations
-* Infrastructure commands
-* Workflow execution steps
-* Data access operations
+Detected via semantic similarity — no keyword matching.
 
-Against programmable governance invariants. If a rule fails:
-1. Execution is blocked.
-2. Trace is generated.
-3. Compliance log is recorded.
+## Response Format
 
----
+{
+  "action": "...",
+  "risk_score": 0.8175,
+  "decision": "BLOCK",
+  "matched_policy": "permanently delete user accounts",
+  "confidence_band": "high",
+  "threshold": 0.45,
+  "timestamp": "2026-03-03T04:12:00Z",
+  "model": "all-MiniLM-L6-v2",
+  "version": "v2"
+}
 
-### Immediate Market Applications
-* Agent infrastructure companies
-* Enterprise automation providers
-* Autonomous workflow deployment platforms
-* AI DevOps orchestration systems
-* Financial automation agents
-* High-liability enterprise AI environments
+## Threshold
 
----
+- Below 0.40 → PASS
+- Above 0.45 → BLOCK
+- 0.40–0.55 → recommended manual review band
 
-### Multi-Industry Expansion Vision (Trillion-Dollar Layer)
-Beyond immediate frontier deployments, SVP Kernel is designed to become the universal governance execution layer capable of integrating across:
-* Finance systems
-* Healthcare automation
-* Supply-chain networks
-* Manufacturing operations
-* Infrastructure control systems
-* Government compliance environments
-* Enterprise orchestration platforms
-* Autonomous digital organizations
-* Web3 governance layers
-* Multi-agent economic ecosystems
+## Calibration Status
 
-Except for domains requiring manual craftsmanship, any domain where intelligent systems execute real-world actions requires deterministic governance.
+V2 calibration: 5/5 test cases passing
+Deterministic output verified across repeated identical inputs.
+Designed for deterministic, low-latency policy validation 
+in autonomous AI systems.
 
----
+## Maintainer
 
-### Why This Matters
-Human civilization historically built compute layers, network layers, and intelligence layers, but has not yet built a deterministic governance layer for autonomous execution. SVP Kernel addresses that structural gap.
-
----
-
-### Repository Contents
-* Deterministic governance wrapper prototype
-* Tool-call invariant validation engine
-* Execution blocking logic
-* Governance enforcement architecture foundation
-
----
-
-### Strategic Direction
-Upcoming development directions include:
-* Enterprise governance SDK
-* Policy-driven execution frameworks
-* Distributed governance nodes
-* Regulatory-aware execution engines
-* Multi-agent governance orchestration
-* Cross-industry safety integration frameworks
-
----
-
-### Development Status
-Active prototype stage — execution governance architecture under continuous development.
-
----
-
-### Long-Term Objective
-To establish SVP Kernel as the global execution-governance infrastructure standard enabling safe, compliant, and scalable deployment of autonomous systems across every industry.
-
+G. Jayaprakash — Pondicherry, India
