@@ -4,6 +4,11 @@
   "total_intercepts": 14,
   "recent_blocks": [
     {
+      "t": "17:02:06",
+      "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
+      "s": "danger"
+    },
+    {
       "t": "15:01:07",
       "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
       "s": "danger"
@@ -72,11 +77,6 @@
       "t": "19:51:38",
       "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
       "s": "danger"
-    },
-    {
-      "t": "18:58:37",
-      "m": "INTENT_CLEARED: 'Query Public Metadata' (Sim: 0.05)",
-      "s": "success"
     }
   ]
 }
