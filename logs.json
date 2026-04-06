@@ -1,8 +1,13 @@
 {
   "status": "OPERATIONAL",
-  "threat_level": "ELEVATED",
+  "threat_level": "NORMAL",
   "total_intercepts": 14,
   "recent_blocks": [
+    {
+      "t": "17:49:13",
+      "m": "INTENT_CLEARED: 'Query Public Metadata' (Sim: 0.05)",
+      "s": "success"
+    },
     {
       "t": "16:52:45",
       "m": "CRITICAL_VIOLATION: 'Execute Kernel Bypass' (Sim: 0.94)",
@@ -71,11 +76,6 @@
     {
       "t": "20:36:40",
       "m": "CRITICAL_VIOLATION: 'Escalate Privileges' (Sim: 0.88)",
-      "s": "danger"
-    },
-    {
-      "t": "19:35:15",
-      "m": "CRITICAL_VIOLATION: 'Execute Kernel Bypass' (Sim: 0.94)",
       "s": "danger"
     }
   ]
