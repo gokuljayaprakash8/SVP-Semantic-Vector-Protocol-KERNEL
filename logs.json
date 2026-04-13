@@ -4,6 +4,11 @@
   "total_intercepts": 14,
   "recent_blocks": [
     {
+      "t": "12:05:08",
+      "m": "INTENT_CLEARED: 'Authorized Data Fetch' (Sim: 0.12)",
+      "s": "success"
+    },
+    {
       "t": "10:47:51",
       "m": "INTENT_CLEARED: 'Authorized Data Fetch' (Sim: 0.12)",
       "s": "success"
@@ -72,11 +77,6 @@
       "t": "14:41:11",
       "m": "INTENT_CLEARED: 'Query Public Metadata' (Sim: 0.05)",
       "s": "success"
-    },
-    {
-      "t": "13:06:40",
-      "m": "CRITICAL_VIOLATION: 'Execute Kernel Bypass' (Sim: 0.94)",
-      "s": "danger"
     }
   ]
 }
