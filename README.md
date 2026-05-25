@@ -6,7 +6,7 @@
 
 Standard prompt filters evaluate AI tool calls in isolation. SVP Kernel scores **cumulative semantic drift** across multi-step agent chains using mathematical vector geometry.
 
-🌐 **[Live Website & Demo](https://gokuljayaprakash8.github.io/SVP-Kernel)**
+🌐 **[Live Website & Demo](https://gokuljayaprakash8.github.io/SVP-Semantic-Vector-Protocol-KERNEL/)**
 
 ## The Vulnerability: Multi-Step Exfiltration
 Frameworks like CrewAI, LangChain, and AutoGen evaluate actions independently. 
