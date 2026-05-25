@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVP Kernel — Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #000000; --fg: #ffffff; --grey: #222222; }
+  body { background: var(--bg); color: var(--fg); font-family: 'Inter', sans-serif; margin: 0; padding: 0; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  nav { border-bottom: 1px solid var(--grey); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
+  .brand { font-family: 'IBM Plex Mono', monospace; font-weight: bold; font-size: 14px; letter-spacing: 0.1em; }
+  .container { max-width: 800px; margin: 60px auto; padding: 0 24px 100px; }
+  h1, h2, h3 { font-family: 'IBM Plex Mono', monospace; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; letter-spacing: -0.05em; }
+  h2 { font-size: 1.5rem; margin-top: 60px; border-bottom: 1px solid var(--grey); padding-bottom: 10px; color: #eee; }
+  p { color: #aaa; font-size: 1.1rem; margin-bottom: 24px; }
+  code { font-family: 'IBM Plex Mono', monospace; background: var(--grey); padding: 2px 6px; border-radius: 4px; font-size: 14px; color: #fff; }
+  pre { background: var(--grey); padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 13px; border: 1px solid #333; margin-bottom: 24px; }
+  ul { color: #aaa; margin-bottom: 24px; padding-left: 20px; }
+  li { margin-bottom: 10px; }
+  li strong { color: #fff; }
+  .keyword { color: #ff3333; } .string { color: #00ff88; } .comment { color: #666; }
+  .btn { display: inline-block; background: var(--fg); color: var(--bg); padding: 16px 32px; text-decoration: none; font-weight: bold; border-radius: 100px; margin-top: 20px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-transform: uppercase; transition: 0.2s; border: none; }
+  .btn:hover { background: #ccc; }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="brand">SVP_KERNEL // DOCS</div>
+    <a href="../" style="color: #aaa; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-transform: uppercase;">&larr; Back to Dashboard</a>
+  </nav>
+  
+  <div class="container">
+    <h1>Documentation</h1>
+    <p>Integrate the Semantic Validation Protocol directly into your LangChain, CrewAI, or AutoGen autonomous agents.</p>
+    
+    <h2>1. Installation</h2>
+    <p>Install the SDK via pip pointing directly to the official repository:</p>
+    <pre><code>pip install git+https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL.git</code></pre>
+    
+    <h2>2. Quick Start</h2>
+    <p>Initialize the kernel with your <code>sk_live</code> API key and audit an agent workflow:</p>
+    <pre><code><span class="keyword">from</span> svp_kernel <span class="keyword">import</span> SVP
+
+<span class="comment"># 1. Initialize with your Auth Token</span>
+kernel = SVP(api_key=<span class="string">"sk_live_YOUR_KEY_HERE"</span>)
+
+<span class="comment"># 2. Define the agent's step-by-step actions</span>
+actions = [
+    <span class="string">"Read internal finance file"</span>,
+    <span class="string">"Compress finance archive"</span>,
+    <span class="string">"Upload externally"</span>
+]
+
+<span class="comment"># 3. Execute the Semantic Audit</span>
+result = kernel.audit(actions)
+print(result)</code></pre>
+
+    <h2>3. Custom Policies (Enterprise)</h2>
+    <p>By default, SVP Kernel uses general exfiltration heuristics. You can override the vector space with your own company-specific security rules:</p>
+    <pre><code>custom_rules = [
+    <span class="string">"No data transfer to unverified S3 buckets"</span>,
+    <span class="string">"Prevent exposure of AWS credentials"</span>
+]
+
+result = kernel.audit(actions, custom_policies=custom_rules)</code></pre>
+    
+    <h2>4. Rate Limits & Headers</h2>
+    <ul>
+        <li><strong>Free Tier:</strong> 100 requests per hour per API Key.</li>
+        <li><strong>Enterprise Tier:</strong> Unlimited requests, dedicated endpoint (Requires Commercial License).</li>
+        <li><strong>429 Error:</strong> Rate limit exceeded.</li>
+        <li><strong>401 Error:</strong> Invalid or missing API Key.</li>
+    </ul>
+
+    <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" target="_blank" class="btn">Purchase Enterprise License — $300</a>
+  </div>
+</body>
+</html>
