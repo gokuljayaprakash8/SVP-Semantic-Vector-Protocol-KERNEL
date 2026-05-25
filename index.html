@@ -135,35 +135,44 @@
       feed.prepend(row); if(feed.children.length > 6) feed.removeChild(feed.lastChild);
     }, 3000);
 
-    // LIVE LEAD CAPTURE SYSTEM
+    // LIVE LEAD CAPTURE SYSTEM (FOREGROUND POST WORKAROUND)
     document.getElementById('generateKeyBtn').addEventListener('click', function() {
       const email = document.getElementById('devEmail').value;
       const btn = this;
       if(email.includes('@')) {
         btn.innerText = "Generating...";
         
-        // FormSubmit Webhook
-        fetch("https://formsubmit.co/ajax/gokuljayaprakashnair@gmail.com", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-                Lead: email,
-                Source: "SVP Kernel Key Generator"
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
+        // Build a hidden form to physically post the data in a new tab
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://formsubmit.co/gokuljayaprakashnair@gmail.com';
+        form.target = '_blank'; // Open in a new tab so the website doesn't close
+
+        const emailInput = document.createElement('input');
+        emailInput.type = 'hidden';
+        emailInput.name = 'email';
+        emailInput.value = email;
+        form.appendChild(emailInput);
+
+        const captchaInput = document.createElement('input');
+        captchaInput.type = 'hidden';
+        captchaInput.name = '_captcha';
+        captchaInput.value = 'false';
+        form.appendChild(captchaInput);
+
+        document.body.appendChild(form);
+        form.submit();
+
+        // Show the fake key generation on the main page
+        setTimeout(() => {
             const key = 'sk_live_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             const resultDiv = document.getElementById('keyResult');
             resultDiv.style.display = 'block';
             resultDiv.innerText = "YOUR KEY: " + key + "\n(Copy this immediately. It will not be shown again.)";
             btn.innerText = "Key Generated";
             btn.style.background = "#00a859";
-        })
-        .catch(error => {
-            alert("Network routing error. Try again.");
-            btn.innerText = "Generate sk_live Key";
-        });
+        }, 1000);
+
       } else {
         alert("Please enter a valid developer email.");
       }
