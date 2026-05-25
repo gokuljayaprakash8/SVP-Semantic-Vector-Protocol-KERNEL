@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="svp_kernel",
-    version="1.0.0-enterprise",
+    version="1.0.0",
     packages=find_packages(),
     install_requires=[
         "requests>=2.25.1",
