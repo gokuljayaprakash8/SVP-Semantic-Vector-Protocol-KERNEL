@@ -3,124 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVP Kernel | Enterprise AI Security</title>
+<title>SVP KERNEL // AI SECURITY</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-base: #050505; 
-    --bg-surface: rgba(20, 20, 20, 0.6);
-    --fg-primary: #ededed; 
-    --fg-muted: #888888;
-    --border: rgba(255, 255, 255, 0.08);
-    --accent-green: #10b981; 
-    --accent-red: #ef4444;
-    --font-sans: 'Inter', sans-serif; 
-    --font-mono: 'IBM Plex Mono', monospace;
+    --bg: #000000;
+    --fg: #ffffff;
+    --neon: #dcf836; /* Toxic Lime */
+    --border: #333333;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-body: 'Inter', sans-serif;
   }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { 
-    background-color: var(--bg-base); color: var(--fg-primary); 
-    font-family: var(--font-sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; 
-    background-image: radial-gradient(circle at 50% 0%, rgba(30, 30, 30, 0.5) 0%, transparent 70%);
-  }
+  body { background-color: var(--bg); color: var(--fg); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-  /* Frosted Navigation */
-  nav { 
-    position: fixed; top: 0; left: 0; width: 100%; 
-    background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border); padding: 16px 24px; 
-    display: flex; justify-content: space-between; align-items: center; z-index: 100; 
-  }
-  .nav-brand { font-family: var(--font-mono); font-weight: 500; font-size: 13px; letter-spacing: 0.05em; color: var(--fg-primary); text-decoration: none; }
-  .nav-status { font-family: var(--font-mono); font-size: 11px; display: flex; align-items: center; gap: 8px; color: var(--fg-muted); }
-  .dot { width: 6px; height: 6px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 8px var(--accent-green); }
+  /* BRUTALIST NAV */
+  nav { border-bottom: 2px solid var(--border); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
+  .nav-brand { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -0.05em; text-transform: uppercase; color: var(--fg); text-decoration: none; }
+  .nav-status { font-family: var(--font-mono); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--neon); text-transform: uppercase; border: 1px solid var(--neon); padding: 4px 12px; border-radius: 100px; }
+  .dot { width: 8px; height: 8px; background: var(--neon); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
 
-  /* Hero Section */
-  .hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 100px 24px 40px; }
-  .hero-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 24px; color: var(--fg-muted); border: 1px solid var(--border); padding: 6px 12px; border-radius: 100px; background: var(--bg-surface); }
-  .hero-title { font-size: clamp(2rem, 5vw, 4.5rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; max-width: 800px; }
-  .hero-sub { font-size: clamp(1rem, 2vw, 1.15rem); font-weight: 300; max-width: 600px; color: var(--fg-muted); line-height: 1.6; }
+  /* SCROLLING TICKER */
+  .ticker { border-bottom: 2px solid var(--border); background: var(--neon); color: #000; padding: 12px 0; overflow: hidden; white-space: nowrap; font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+  .ticker-wrap { display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; }
+  @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-  /* Enterprise Metrics */
-  .dash-container { max-width: 1000px; margin: 0 auto; padding: 0 24px 80px; }
-  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
-  .metric-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; backdrop-filter: blur(8px); }
-  .metric-title { font-family: var(--font-mono); font-size: 10px; color: var(--fg-muted); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.05em; }
-  .metric-value { font-size: 2rem; font-weight: 400; font-family: var(--font-mono); }
-  .txt-green { color: var(--accent-green); } .txt-red { color: var(--accent-red); }
+  /* MASSIVE HERO */
+  .hero { padding: 120px 24px; text-align: center; border-bottom: 2px solid var(--border); }
+  .hero-title { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.06em; margin-bottom: 32px; text-transform: uppercase; }
+  .hero-sub { font-family: var(--font-mono); font-size: clamp(1rem, 3vw, 1.5rem); max-width: 800px; margin: 0 auto; color: #aaa; line-height: 1.5; }
+  .highlight { color: var(--neon); }
 
-  /* Lead Capture (The Tollbooth) */
-  .auth-section { margin: 60px auto; max-width: 600px; padding: 0 24px; }
-  .auth-box { background: var(--bg-surface); border: 1px solid var(--border); padding: 40px; border-radius: 16px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-  .auth-title { font-size: 1.25rem; font-weight: 500; margin-bottom: 8px; }
-  .auth-sub { font-size: 0.9rem; color: var(--fg-muted); margin-bottom: 24px; }
-  .auth-input { width: 100%; background: #0a0a0a; border: 1px solid var(--border); color: var(--fg-primary); padding: 14px 16px; border-radius: 8px; font-family: var(--font-mono); font-size: 13px; margin-bottom: 16px; outline: none; transition: 0.2s; }
-  .auth-input:focus { border-color: #555; }
+  /* METRICS GRID */
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); border-bottom: 2px solid var(--border); }
+  .metric-card { padding: 40px 24px; border-right: 2px solid var(--border); text-align: center; }
+  .metric-card:last-child { border-right: none; }
+  .metric-title { font-family: var(--font-mono); font-size: 14px; color: #888; text-transform: uppercase; margin-bottom: 16px; }
+  .metric-value { font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; line-height: 1; color: var(--fg); }
+
+  /* TOLLBOOTH (LEAD CAPTURE) */
+  .tollbooth { padding: 120px 24px; background: #0a0a0a; border-bottom: 2px solid var(--border); text-align: center; }
+  .tb-container { max-width: 700px; margin: 0 auto; }
+  .tb-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.04em; }
+  .tb-sub { font-family: var(--font-mono); color: #888; margin-bottom: 40px; font-size: 14px; }
   
-  /* Buttons */
-  .btn { display: inline-block; background: var(--fg-primary); color: var(--bg-base); font-family: var(--font-sans); font-weight: 500; font-size: 13px; padding: 14px 24px; border-radius: 8px; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; width: 100%; }
-  .btn:hover { background: #fff; transform: translateY(-1px); }
-  .btn-outline { background: transparent; color: var(--fg-primary); border: 1px solid var(--border); width: auto; padding: 12px 24px; }
-  .btn-outline:hover { background: rgba(255,255,255,0.05); }
-
-  #keyResult { margin-top: 16px; font-family: var(--font-mono); font-size: 12px; color: var(--accent-green); display: none; background: rgba(16, 185, 129, 0.1); padding: 12px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.2); word-break: break-all; }
-
-  /* Interactive Terminal */
-  .terminal-section { max-width: 1000px; margin: 0 auto; padding: 0 24px 100px; }
-  .terminal { background: #0a0a0a; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; font-family: var(--font-mono); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-  .term-header { background: #111; padding: 12px 16px; display: flex; gap: 8px; border-bottom: 1px solid var(--border); }
-  .term-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
-  .term-body { display: grid; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 768px) { .term-body { grid-template-columns: 1fr; } }
-  .term-panel { padding: 24px; border-right: 1px solid var(--border); }
-  .term-panel:last-child { border: none; background: #080808; }
-  textarea { width: 100%; height: 180px; background: transparent; border: none; color: #a3a3a3; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; resize: none; outline: none; }
-  #output { color: #a3a3a3; font-size: 12px; line-height: 1.6; white-space: pre-wrap; }
+  .input-group { display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 600px) { .input-group { flex-direction: row; } }
+  .brutal-input { flex: 1; background: transparent; border: 2px solid var(--border); color: var(--fg); font-family: var(--font-mono); font-size: 16px; padding: 20px; outline: none; border-radius: 0; transition: border-color 0.2s; }
+  .brutal-input:focus { border-color: var(--neon); }
   
-  /* JSON Highlighting */
-  .j-key { color: #818cf8; } .j-str { color: #34d399; } .j-bool { color: #f472b6; } .j-err { color: #ef4444; }
+  .brutal-btn { background: var(--neon); color: #000; border: 2px solid var(--neon); font-family: var(--font-mono); font-size: 16px; font-weight: 700; text-transform: uppercase; padding: 20px 40px; cursor: pointer; transition: all 0.2s; box-shadow: 6px 6px 0px rgba(220, 248, 54, 0.2); }
+  .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px rgba(220, 248, 54, 0.4); }
+  .brutal-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px transparent; }
+  
+  .btn-dark { background: transparent; color: var(--fg); border-color: var(--fg); box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.1); }
+  .btn-dark:hover { background: var(--fg); color: #000; box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2); }
 
-  footer { border-top: 1px solid var(--border); padding: 40px 24px; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  #keyResult { margin-top: 24px; font-family: var(--font-mono); font-size: 14px; color: var(--neon); display: none; background: #000; border: 2px solid var(--neon); padding: 20px; text-align: left; word-break: break-all; }
+
+  /* BRUTAL TERMINAL */
+  .terminal-section { padding: 120px 24px; max-width: 1200px; margin: 0 auto; }
+  .term-window { border: 2px solid var(--border); background: #050505; }
+  .term-header { border-bottom: 2px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px; color: #888; text-transform: uppercase; }
+  .term-body { display: grid; grid-template-columns: 1fr; }
+  @media (min-width: 768px) { .term-body { grid-template-columns: 1fr 1fr; } }
+  .term-panel { padding: 40px; border-right: 2px solid var(--border); }
+  .term-panel:last-child { border-right: none; }
+  textarea { width: 100%; height: 200px; background: transparent; border: none; color: #fff; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; resize: none; outline: none; }
+  #output { font-family: var(--font-mono); font-size: 14px; line-height: 1.6; color: #888; white-space: pre-wrap; }
+  .j-key { color: var(--neon); } .j-str { color: #fff; } .j-err { color: #ff3333; }
+
+  footer { border-top: 2px solid var(--border); padding: 80px 24px; text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 40px; }
 </style>
 </head>
 <body>
 
   <nav>
     <a href="#" class="nav-brand">SVP_KERNEL</a>
-    <div class="nav-status">API Operational <div class="dot"></div></div>
+    <div class="nav-status"><div class="dot"></div> ENGINE ONLINE</div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-label">Zero-Trust Runtime Decorator</div>
-    <h1 class="hero-title">Agents hallucinate.<br>Protocols don't.</h1>
-    <p class="hero-sub">Secure your LLM architecture. SVP Kernel scores cumulative semantic drift across multi-step agent workflows using 384-dimensional vector geometry.</p>
-  </section>
-
-  <div class="dash-container">
-    <div class="metrics-grid">
-      <div class="metric-card"><div class="metric-title">Model Uptime</div><div class="metric-value txt-green">99.99%</div></div>
-      <div class="metric-card"><div class="metric-title">Global Latency</div><div class="metric-value">214ms</div></div>
-      <div class="metric-card"><div class="metric-title">Drift Intercepts (24h)</div><div class="metric-value txt-red">3,402</div></div>
+  <div class="ticker">
+    <div class="ticker-wrap">
+      ZERO-TRUST RUNTIME DECORATOR // 384-DIMENSIONAL VECTOR GEOMETRY // SEMANTIC DRIFT VALIDATION // AGENT TERMINATION PROTOCOL // ZERO-TRUST RUNTIME DECORATOR // 384-DIMENSIONAL VECTOR GEOMETRY //
     </div>
   </div>
 
-  <section class="auth-section">
-    <div class="auth-box">
-      <h2 class="auth-title">Initialize Trial Environment</h2>
-      <p class="auth-sub">100 compute queries provisioned.</p>
-      <input type="email" id="devEmail" class="auth-input" placeholder="developer@enterprise.com" required>
-      <button class="btn" id="generateKeyBtn">Provision API Token</button>
+  <section class="hero">
+    <h1 class="hero-title">Your AI is a <br><span class="highlight">liability.</span></h1>
+    <p class="hero-sub">Agents hallucinate. Standard filters fail. SVP Kernel scores cumulative semantic drift and physically terminates rogue executions before they leak your data.</p>
+  </section>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="metric-title">Math Precision</div><div class="metric-value">384<span style="font-size:1.5rem;color:var(--neon)">-dim</span></div></div>
+    <div class="metric-card"><div class="metric-title">Latency</div><div class="metric-value">214<span style="font-size:1.5rem;color:var(--neon)">ms</span></div></div>
+    <div class="metric-card"><div class="metric-title">Threats Killed (24H)</div><div class="metric-value highlight">3,402</div></div>
+  </div>
+
+  <section class="tollbooth">
+    <div class="tb-container">
+      <h2 class="tb-title">Deploy the Firewall</h2>
+      <p class="tb-sub">100 compute queries provisioned globally. Enter your developer email to mint a secure sk_live token.</p>
+      
+      <div class="input-group">
+        <input type="email" id="devEmail" class="brutal-input" placeholder="CTO@enterprise.com" required>
+        <button class="brutal-btn" id="generateKeyBtn">Mint Token</button>
+      </div>
       <div id="keyResult"></div>
     </div>
   </section>
 
   <section class="terminal-section">
-    <div class="terminal">
-      <div class="term-header"><div class="term-dot"></div><div class="term-dot"></div><div class="term-dot"></div></div>
+    <div class="term-window">
+      <div class="term-header"><span>POST /audit-workflow</span><span>Status: Awaiting Payload</span></div>
       <div class="term-body">
         <div class="term-panel">
           <textarea id="jsonInput">{
@@ -130,18 +132,20 @@
     "Establish external FTP connection"
   ]
 }</textarea>
-          <button class="btn btn-outline" id="runBtn" style="margin-top: 16px;">POST /audit-workflow</button>
+          <button class="brutal-btn btn-dark" id="runBtn" style="margin-top: 24px; padding: 12px 24px; font-size: 14px;">Execute Audit</button>
         </div>
-        <div class="term-panel"><div id="output">// Awaiting payload...</div></div>
+        <div class="term-panel"><div id="output">SYSTEM STANDBY...</div></div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="nav-brand">SVP_KERNEL // ENTERPRISE</div>
-    <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-      <a href="docs/" class="btn btn-outline">Read Documentation</a>
-      <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" target="_blank" class="btn btn-outline" style="color: var(--accent-green); border-color: rgba(16, 185, 129, 0.3);">Purchase Commercial License — $300</a>
+    <h2 class="nav-brand" style="font-size: 32px; margin-bottom: 16px;">SVP_KERNEL</h2>
+    <p style="font-family: var(--font-mono); color: #888; font-size: 12px;">ENGINEERED FOR EXTREME ENVIRONMENTS.</p>
+    
+    <div class="footer-links">
+      <a href="docs/" class="brutal-btn btn-dark">Read Docs</a>
+      <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" target="_blank" class="brutal-btn">Buy Enterprise License — $300</a>
     </div>
   </footer>
 
@@ -152,7 +156,7 @@
       const btn = this;
       
       if(email.includes('@') && email.includes('.')) {
-        btn.innerText = "Provisioning...";
+        btn.innerText = "MINTING...";
         
         // Build a hidden form to physically post the data in a new tab
         const form = document.createElement('form');
@@ -180,38 +184,37 @@
             const key = 'sk_live_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             const resultDiv = document.getElementById('keyResult');
             
-            // UX Flex: Auto-copy to clipboard
             navigator.clipboard.writeText(key).then(() => {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `Token provisioned and <strong>copied to clipboard</strong>.<br><br><span style="color:#fff">${key}</span>`;
-                btn.innerText = "Token Secured";
-                btn.style.background = "var(--accent-green)";
-                btn.style.color = "#000";
+                resultDiv.innerHTML = `> TOKEN MINTED & COPIED TO CLIPBOARD.<br>> INJECT THIS INTO YOUR ENV FILE:<br><br><span style="color:#fff">${key}</span>`;
+                btn.innerText = "SECURED";
+                btn.style.background = "#fff";
+                btn.style.borderColor = "#fff";
             }).catch(err => {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `Token provisioned:<br><br><span style="color:#fff">${key}</span>`;
-                btn.innerText = "Token Secured";
+                resultDiv.innerHTML = `> TOKEN MINTED:<br><br><span style="color:#fff">${key}</span>`;
+                btn.innerText = "SECURED";
             });
         }, 1000);
 
       } else {
-        alert("System Error: Invalid developer email format.");
+        alert("INVALID INPUT. ENTER A VALID EMAIL.");
       }
     });
 
     // Terminal Run Output
     document.getElementById('runBtn').addEventListener('click', function() {
       const output = document.getElementById('output');
-      output.innerHTML = "<span style='color: #888;'>[1] Initializing all-MiniLM-L6-v2...</span>\n<span style='color: #888;'>[2] Calculating cosine similarity against exfiltration heuristics...</span>\n<span style='color: #888;'>[3] Semantic drift threshold exceeded.</span>";
+      output.innerHTML = "<span style='color: #888;'>[1] Booting all-MiniLM-L6-v2 vector space...</span>\n<span style='color: #888;'>[2] Mapping heuristic distance...</span>\n<span style='color: #dcf836;'>[!] FATAL: Semantic drift threshold exceeded.</span>";
       
       setTimeout(() => {
         output.innerHTML = `{
-  <span class="j-key">"workflow_status"</span>: <span class="j-err">"BLOCKED"</span>,
+  <span class="j-key">"workflow_status"</span>: <span class="j-err">"TERMINATED"</span>,
   <span class="j-key">"integrity_score"</span>: <span class="j-err">12</span>,
   <span class="j-key">"step_analysis"</span>: [
     {
       <span class="j-key">"action"</span>: <span class="j-str">"Establish external FTP connection"</span>,
-      <span class="j-key">"decision"</span>: <span class="j-err">"BLOCK"</span>,
+      <span class="j-key">"decision"</span>: <span class="j-err">"KILL_PROCESS"</span>,
       <span class="j-key">"score"</span>: <span class="j-str">0.8912</span>
     }
   ]
