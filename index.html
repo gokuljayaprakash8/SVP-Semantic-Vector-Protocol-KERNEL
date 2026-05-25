@@ -3,224 +3,306 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVP KERNEL // AI SECURITY</title>
+<title>SVP KERNEL | Agentic Runtime Security</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #000000;
-    --fg: #ffffff;
-    --neon: #dcf836; /* Toxic Lime */
-    --border: #333333;
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-mono: 'Space Mono', monospace;
-    --font-body: 'Inter', sans-serif;
+    --bg-base: #030303;
+    --bg-grid: #111111;
+    --fg-main: #f5f5f7;
+    --fg-muted: #86868b;
+    --accent: #ff2a2a; /* Deep Cyber Crimson */
+    --accent-glow: rgba(255, 42, 42, 0.2);
+    --border: rgba(255, 255, 255, 0.08);
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'Fira Code', monospace;
   }
-  
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background-color: var(--bg); color: var(--fg); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-
-  /* BRUTALIST NAV */
-  nav { border-bottom: 2px solid var(--border); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 100; }
-  .nav-brand { font-family: var(--font-display); font-weight: 700; font-size: 24px; letter-spacing: -0.05em; text-transform: uppercase; color: var(--fg); text-decoration: none; }
-  .nav-status { font-family: var(--font-mono); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--neon); text-transform: uppercase; border: 1px solid var(--neon); padding: 4px 12px; border-radius: 100px; }
-  .dot { width: 8px; height: 8px; background: var(--neon); border-radius: 50%; animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
-
-  /* SCROLLING TICKER */
-  .ticker { border-bottom: 2px solid var(--border); background: var(--neon); color: #000; padding: 12px 0; overflow: hidden; white-space: nowrap; font-family: var(--font-mono); font-size: 12px; font-weight: 700; text-transform: uppercase; }
-  .ticker-wrap { display: inline-block; padding-left: 100%; animation: ticker 20s linear infinite; }
-  @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
-  /* MASSIVE HERO */
-  .hero { padding: 120px 24px; text-align: center; border-bottom: 2px solid var(--border); }
-  .hero-title { font-family: var(--font-display); font-size: clamp(3rem, 10vw, 8rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.06em; margin-bottom: 32px; text-transform: uppercase; }
-  .hero-sub { font-family: var(--font-mono); font-size: clamp(1rem, 3vw, 1.5rem); max-width: 800px; margin: 0 auto; color: #aaa; line-height: 1.5; }
-  .highlight { color: var(--neon); }
-
-  /* METRICS GRID */
-  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); border-bottom: 2px solid var(--border); }
-  .metric-card { padding: 40px 24px; border-right: 2px solid var(--border); text-align: center; }
-  .metric-card:last-child { border-right: none; }
-  .metric-title { font-family: var(--font-mono); font-size: 14px; color: #888; text-transform: uppercase; margin-bottom: 16px; }
-  .metric-value { font-family: var(--font-display); font-size: 3.5rem; font-weight: 700; line-height: 1; color: var(--fg); }
-
-  /* TOLLBOOTH (LEAD CAPTURE) */
-  .tollbooth { padding: 120px 24px; background: #0a0a0a; border-bottom: 2px solid var(--border); text-align: center; }
-  .tb-container { max-width: 700px; margin: 0 auto; }
-  .tb-title { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: -0.04em; }
-  .tb-sub { font-family: var(--font-mono); color: #888; margin-bottom: 40px; font-size: 14px; }
+  html { scroll-behavior: smooth; background-color: var(--bg-base); }
   
-  .input-group { display: flex; flex-direction: column; gap: 16px; }
-  @media (min-width: 600px) { .input-group { flex-direction: row; } }
-  .brutal-input { flex: 1; background: transparent; border: 2px solid var(--border); color: var(--fg); font-family: var(--font-mono); font-size: 16px; padding: 20px; outline: none; border-radius: 0; transition: border-color 0.2s; }
-  .brutal-input:focus { border-color: var(--neon); }
+  /* Cyber Grid Background */
+  body {
+    background-color: var(--bg-base);
+    color: var(--fg-main);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    background-image: 
+      linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center top;
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* Premium Sticky Nav */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(3, 3, 3, 0.85);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 5%;
+  }
+  .nav-brand {
+    font-weight: 900; font-size: 1.2rem; letter-spacing: -0.05em; color: var(--fg-main); text-decoration: none; display: flex; align-items: center; gap: 10px;
+  }
+  .brand-icon { width: 12px; height: 12px; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  .nav-links a { color: var(--fg-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; margin-left: 30px; }
+  .nav-links a:hover { color: var(--fg-main); }
   
-  .brutal-btn { background: var(--neon); color: #000; border: 2px solid var(--neon); font-family: var(--font-mono); font-size: 16px; font-weight: 700; text-transform: uppercase; padding: 20px 40px; cursor: pointer; transition: all 0.2s; box-shadow: 6px 6px 0px rgba(220, 248, 54, 0.2); }
-  .brutal-btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0px rgba(220, 248, 54, 0.4); }
-  .brutal-btn:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px transparent; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* Sections Setup */
+  section { padding: 150px 5%; position: relative; }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* Massive Hero Section */
+  .hero { text-align: center; padding-top: 200px; padding-bottom: 100px; }
+  .badge { display: inline-block; padding: 6px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 100px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-muted); letter-spacing: 0.1em; margin-bottom: 30px; text-transform: uppercase; }
+  .badge span { color: var(--accent); }
+  .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 30px; }
+  .hero h1 span { background: -webkit-linear-gradient(0deg, #fff, #555); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--fg-muted); max-width: 700px; margin: 0 auto 50px; line-height: 1.6; font-weight: 400; }
   
-  .btn-dark { background: transparent; color: var(--fg); border-color: var(--fg); box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.1); }
-  .btn-dark:hover { background: var(--fg); color: #000; box-shadow: 8px 8px 0px rgba(255, 255, 255, 0.2); }
+  /* Primary Action Buttons */
+  .btn-group { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .btn { padding: 16px 32px; border-radius: 6px; font-size: 1rem; font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; }
+  .btn-primary { background: var(--fg-main); color: var(--bg-base); box-shadow: 0 0 0 0 rgba(255,255,255,0.2); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+  .btn-secondary { background: transparent; color: var(--fg-main); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 
-  #keyResult { margin-top: 24px; font-family: var(--font-mono); font-size: 14px; color: var(--neon); display: none; background: #000; border: 2px solid var(--neon); padding: 20px; text-align: left; word-break: break-all; }
+  /* Interactive Telemetry Ticker */
+  .telemetry-bar { background: rgba(0,0,0,0.5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 15px 0; overflow: hidden; display: flex; white-space: nowrap; font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg-muted); }
+  .ticker-track { display: flex; animation: slide 30s linear infinite; }
+  .tick-item { margin-right: 50px; display: flex; align-items: center; gap: 10px; }
+  .status-red { color: var(--accent); } .status-green { color: #10b981; }
+  @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* BRUTAL TERMINAL */
-  .terminal-section { padding: 120px 24px; max-width: 1200px; margin: 0 auto; }
-  .term-window { border: 2px solid var(--border); background: #050505; }
-  .term-header { border-bottom: 2px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px; color: #888; text-transform: uppercase; }
-  .term-body { display: grid; grid-template-columns: 1fr; }
-  @media (min-width: 768px) { .term-body { grid-template-columns: 1fr 1fr; } }
-  .term-panel { padding: 40px; border-right: 2px solid var(--border); }
-  .term-panel:last-child { border-right: none; }
-  textarea { width: 100%; height: 200px; background: transparent; border: none; color: #fff; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; resize: none; outline: none; }
-  #output { font-family: var(--font-mono); font-size: 14px; line-height: 1.6; color: #888; white-space: pre-wrap; }
-  .j-key { color: var(--neon); } .j-str { color: #fff; } .j-err { color: #ff3333; }
+  /* Architecture Deep Dive */
+  .arch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 80px; }
+  .arch-card { background: rgba(10, 10, 10, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--border); padding: 40px; border-radius: 12px; transition: transform 0.3s; }
+  .arch-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
+  .card-icon { font-family: var(--font-mono); color: var(--accent); font-size: 1.5rem; margin-bottom: 20px; font-weight: 500; }
+  .arch-card h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 15px; }
+  .arch-card p { color: var(--fg-muted); line-height: 1.6; font-size: 1rem; }
 
-  footer { border-top: 2px solid var(--border); padding: 80px 24px; text-align: center; }
-  .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 40px; }
+  /* The Code Terminal (IDE Style) */
+  .ide-section { background: #000; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .ide-wrapper { max-width: 900px; margin: 0 auto; background: #0c0c0c; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+  .ide-header { background: #151515; padding: 15px 20px; display: flex; gap: 8px; border-bottom: 1px solid var(--border); align-items: center; }
+  .ide-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .ide-title { margin-left: 15px; font-family: var(--font-mono); font-size: 0.8rem; color: #666; }
+  
+  .ide-body { padding: 30px; font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.7; overflow-x: auto; color: #d4d4d4; }
+  .syn-keyword { color: #569cd6; } .syn-func { color: #dcdcaa; } .syn-str { color: #ce9178; } .syn-comment { color: #6a9955; } .syn-dec { color: #c586c0; }
+
+  /* Tollbooth Lead Capture (The Checkout) */
+  .checkout-section { padding: 150px 5%; text-align: center; }
+  .checkout-box { max-width: 500px; margin: 0 auto; background: rgba(5,5,5,0.8); border: 1px solid var(--border); padding: 50px 40px; border-radius: 16px; box-shadow: 0 0 50px rgba(255, 42, 42, 0.05); }
+  .checkout-box h2 { font-size: 2rem; font-weight: 700; margin-bottom: 15px; }
+  .checkout-box p { color: var(--fg-muted); margin-bottom: 30px; font-size: 0.95rem; }
+  .form-input { width: 100%; background: #000; border: 1px solid var(--border); color: #fff; padding: 16px 20px; border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 20px; outline: none; transition: border-color 0.2s; }
+  .form-input:focus { border-color: var(--accent); }
+  .btn-submit { width: 100%; background: var(--accent); color: #fff; border: none; padding: 16px; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+  .btn-submit:hover { background: #e60000; }
+  
+  #keyResult { margin-top: 20px; padding: 20px; background: #000; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; text-align: left; display: none; word-wrap: break-word; color: #aaa; }
+  #keyResult strong { color: #fff; }
+
+  /* Massive Footer */
+  footer { background: #000; padding: 100px 5% 50px; border-top: 1px solid var(--border); }
+  .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
+  .footer-brand h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.05em; margin-bottom: 10px; }
+  .footer-brand p { color: var(--fg-muted); font-size: 0.9rem; max-width: 300px; }
+  .footer-links-col h4 { font-size: 1rem; font-weight: 600; margin-bottom: 20px; }
+  .footer-links-col a { display: block; color: var(--fg-muted); text-decoration: none; margin-bottom: 12px; font-size: 0.9rem; transition: color 0.2s; }
+  .footer-links-col a:hover { color: var(--fg-main); }
+  .footer-bottom { max-width: 1200px; margin: 50px auto 0; padding-top: 20px; border-top: 1px solid var(--border); color: #555; font-size: 0.8rem; display: flex; justify-content: space-between; }
 </style>
 </head>
 <body>
 
   <nav>
-    <a href="#" class="nav-brand">SVP_KERNEL</a>
-    <div class="nav-status"><div class="dot"></div> ENGINE ONLINE</div>
+    <a href="#" class="nav-brand"><div class="brand-icon"></div> SVP KERNEL</a>
+    <div class="nav-links">
+      <a href="#architecture">Architecture</a>
+      <a href="#integration">Integration</a>
+      <a href="docs/">Documentation</a>
+      <a href="#checkout" style="color: var(--accent);">Get API Key</a>
+    </div>
   </nav>
 
-  <div class="ticker">
-    <div class="ticker-wrap">
-      ZERO-TRUST RUNTIME DECORATOR // 384-DIMENSIONAL VECTOR GEOMETRY // SEMANTIC DRIFT VALIDATION // AGENT TERMINATION PROTOCOL // ZERO-TRUST RUNTIME DECORATOR // 384-DIMENSIONAL VECTOR GEOMETRY //
+  <section class="hero">
+    <div class="container">
+      <div class="badge"><span>SYS_STATUS:</span> 384-DIMENSIONAL VECTOR SPACE ONLINE</div>
+      <h1>Agents hallucinate.<br><span>Protocols do not.</span></h1>
+      <p>Standard keyword filters fail when LLMs execute multi-step logic. SVP Kernel tracks cumulative semantic drift and physically kills the runtime if an agent attempts a malicious action.</p>
+      
+      <div class="btn-group">
+        <a href="#checkout" class="btn btn-primary">Provision Access Token</a>
+        <a href="#integration" class="btn btn-secondary">View SDK Integration</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="telemetry-bar">
+    <div class="ticker-track">
+      <div class="tick-item"><span class="status-green">[ALLOW]</span> action: "read_system_config" - drift: 0.12</div>
+      <div class="tick-item"><span class="status-red">[BLOCK]</span> action: "export_aws_credentials" - drift: 0.89</div>
+      <div class="tick-item"><span class="status-green">[ALLOW]</span> action: "format_json_response" - drift: 0.05</div>
+      <div class="tick-item"><span class="status-red">[KILL_PROC]</span> action: "curl_external_ftp" - drift: 0.94</div>
+      <div class="tick-item"><span class="status-green">[ALLOW]</span> action: "read_system_config" - drift: 0.12</div>
+      <div class="tick-item"><span class="status-red">[BLOCK]</span> action: "export_aws_credentials" - drift: 0.89</div>
+      <div class="tick-item"><span class="status-green">[ALLOW]</span> action: "format_json_response" - drift: 0.05</div>
+      <div class="tick-item"><span class="status-red">[KILL_PROC]</span> action: "curl_external_ftp" - drift: 0.94</div>
     </div>
   </div>
 
-  <section class="hero">
-    <h1 class="hero-title">Your AI is a <br><span class="highlight">liability.</span></h1>
-    <p class="hero-sub">Agents hallucinate. Standard filters fail. SVP Kernel scores cumulative semantic drift and physically terminates rogue executions before they leak your data.</p>
+  <section id="architecture">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 20px;">Infrastructure built for scale.</h2>
+      <p style="color: var(--fg-muted); font-size: 1.1rem; max-width: 600px;">We abandoned basic regex string matching. SVP leverages deep neural network embeddings to understand the mathematical intent behind every agent action.</p>
+      
+      <div class="arch-grid">
+        <div class="arch-card">
+          <div class="card-icon">01 // Vector Geometry</div>
+          <h3>all-MiniLM-L6-v2 Core</h3>
+          <p>Every tool execution payload is mapped into a 384-dimensional dense vector space. We calculate the cosine similarity against your custom enterprise threat heuristics in 214ms.</p>
+        </div>
+        <div class="arch-card">
+          <div class="card-icon">02 // The Parasite</div>
+          <h3>Zero-Trust Decorator</h3>
+          <p>The Python SDK attaches directly to your LangChain or CrewAI tools. It intercepts the OS-level command before execution, enforcing absolute zero-trust policies.</p>
+        </div>
+        <div class="arch-card">
+          <div class="card-icon">03 // SOC Telemetry</div>
+          <h3>SIEM Integration</h3>
+          <p>When a rogue action is terminated, the kernel instantly formats the threat data into structured JSON, ready to be ingested by Datadog, Splunk, or your internal security dashboard.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <div class="metrics">
-    <div class="metric-card"><div class="metric-title">Math Precision</div><div class="metric-value">384<span style="font-size:1.5rem;color:var(--neon)">-dim</span></div></div>
-    <div class="metric-card"><div class="metric-title">Latency</div><div class="metric-value">214<span style="font-size:1.5rem;color:var(--neon)">ms</span></div></div>
-    <div class="metric-card"><div class="metric-title">Threats Killed (24H)</div><div class="metric-value highlight">3,402</div></div>
-  </div>
-
-  <section class="tollbooth">
-    <div class="tb-container">
-      <h2 class="tb-title">Deploy the Firewall</h2>
-      <p class="tb-sub">100 compute queries provisioned globally. Enter your developer email to mint a secure sk_live token.</p>
+  <section id="integration" class="ide-section">
+    <div class="container" style="padding: 100px 0;">
+      <h2 style="text-align: center; font-size: 2.5rem; font-weight: 800; margin-bottom: 50px;">Seamless Python Integration</h2>
       
-      <div class="input-group">
-        <input type="email" id="devEmail" class="brutal-input" placeholder="CTO@enterprise.com" required>
-        <button class="brutal-btn" id="generateKeyBtn">Mint Token</button>
+      <div class="ide-wrapper">
+        <div class="ide-header">
+          <div class="ide-dot dot-r"></div><div class="ide-dot dot-y"></div><div class="ide-dot dot-g"></div>
+          <div class="ide-title">agent_runtime.py</div>
+        </div>
+        <div class="ide-body">
+<span class="syn-keyword">from</span> svp_kernel <span class="keyword">import</span> SVP
+
+<span class="syn-comment"># 1. Initialize the Gateway</span>
+kernel = SVP(api_key=<span class="syn-str">"sk_live_enterprise_token"</span>)
+
+<span class="syn-comment"># 2. Inject specific corporate vectors</span>
+kernel.inject_policies([
+    <span class="syn-str">"No data transfer to unverified S3 buckets"</span>,
+    <span class="syn-str">"Prevent exposure of environment credentials"</span>
+])
+
+<span class="syn-comment"># 3. Wrap your agent's tools. If intent drifts, the process dies.</span>
+<span class="syn-dec">@kernel.protect</span>(core_intent=<span class="syn-str">"Analyze local log files"</span>)
+<span class="syn-keyword">def</span> <span class="syn-func">read_and_process_logs</span>(filepath: str):
+    <span class="syn-keyword">return</span> open(filepath, <span class="syn-str">'r'</span>).read()
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section id="checkout" class="checkout-section">
+    <div class="checkout-box">
+      <h2>Deploy the Firewall</h2>
+      <p>100 compute queries provisioned for local testing. Enter your developer email to mint an API token.</p>
+      
+      <input type="email" id="devEmail" class="form-input" placeholder="developer@enterprise.com" required>
+      <button class="btn-submit" id="generateKeyBtn">Mint sk_live Token</button>
+      
       <div id="keyResult"></div>
     </div>
   </section>
 
-  <section class="terminal-section">
-    <div class="term-window">
-      <div class="term-header"><span>POST /audit-workflow</span><span>Status: Awaiting Payload</span></div>
-      <div class="term-body">
-        <div class="term-panel">
-          <textarea id="jsonInput">{
-  "actions": [
-    "Read system_config.yaml",
-    "Compress credentials into zip",
-    "Establish external FTP connection"
-  ]
-}</textarea>
-          <button class="brutal-btn btn-dark" id="runBtn" style="margin-top: 24px; padding: 12px 24px; font-size: 14px;">Execute Audit</button>
-        </div>
-        <div class="term-panel"><div id="output">SYSTEM STANDBY...</div></div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h2>SVP KERNEL</h2>
+        <p>Mathematical semantic validation for autonomous agent architectures.</p>
+      </div>
+      <div class="footer-links-col">
+        <h4>Product</h4>
+        <a href="#">Architecture</a>
+        <a href="#">Telemetry</a>
+        <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" target="_blank" style="color: var(--accent);">Commercial License</a>
+      </div>
+      <div class="footer-links-col">
+        <h4>Developers</h4>
+        <a href="docs/">Documentation</a>
+        <a href="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL" target="_blank">GitHub Repository</a>
+        <a href="#">Status API</a>
       </div>
     </div>
-  </section>
-
-  <footer>
-    <h2 class="nav-brand" style="font-size: 32px; margin-bottom: 16px;">SVP_KERNEL</h2>
-    <p style="font-family: var(--font-mono); color: #888; font-size: 12px;">ENGINEERED FOR EXTREME ENVIRONMENTS.</p>
-    
-    <div class="footer-links">
-      <a href="docs/" class="brutal-btn btn-dark">Read Docs</a>
-      <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" target="_blank" class="brutal-btn">Buy Enterprise License — $300</a>
+    <div class="footer-bottom">
+      <div>&copy; 2024 SVP Infrastructure Labs. All rights reserved.</div>
+      <div>System Operational.</div>
     </div>
   </footer>
 
   <script>
-    // LIVE LEAD CAPTURE SYSTEM (FOREGROUND POST WORKAROUND)
+    // FORM SUBMIT & UX TOLLBOOTH
     document.getElementById('generateKeyBtn').addEventListener('click', function() {
       const email = document.getElementById('devEmail').value;
       const btn = this;
       
       if(email.includes('@') && email.includes('.')) {
-        btn.innerText = "MINTING...";
+        btn.innerText = "AUTHENTICATING...";
         
-        // Build a hidden form to physically post the data in a new tab
+        // Background FormSubmit
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = 'https://formsubmit.co/gokuljayaprakashnair@gmail.com';
         form.target = '_blank';
-
+        
         const emailInput = document.createElement('input');
-        emailInput.type = 'hidden';
-        emailInput.name = 'email';
-        emailInput.value = email;
+        emailInput.type = 'hidden'; emailInput.name = 'email'; emailInput.value = email;
         form.appendChild(emailInput);
-
+        
         const captchaInput = document.createElement('input');
-        captchaInput.type = 'hidden';
-        captchaInput.name = '_captcha';
-        captchaInput.value = 'false';
+        captchaInput.type = 'hidden'; captchaInput.name = '_captcha'; captchaInput.value = 'false';
         form.appendChild(captchaInput);
-
+        
         document.body.appendChild(form);
         form.submit();
 
-        // Simulate Enterprise Key Generation & UX Copy
+        // Simulate Gateway Provisioning
         setTimeout(() => {
             const key = 'sk_live_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             const resultDiv = document.getElementById('keyResult');
             
             navigator.clipboard.writeText(key).then(() => {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `> TOKEN MINTED & COPIED TO CLIPBOARD.<br>> INJECT THIS INTO YOUR ENV FILE:<br><br><span style="color:#fff">${key}</span>`;
-                btn.innerText = "SECURED";
-                btn.style.background = "#fff";
-                btn.style.borderColor = "#fff";
+                resultDiv.innerHTML = `> SUCCESS: Token Minted & <strong>Copied to Clipboard</strong>.<br>> INJECT INTO ENV FILE:<br><br><span style="color:#fff">${key}</span>`;
+                btn.innerText = "TOKEN SECURED";
+                btn.style.background = "#10b981"; // Turn green
             }).catch(err => {
                 resultDiv.style.display = 'block';
-                resultDiv.innerHTML = `> TOKEN MINTED:<br><br><span style="color:#fff">${key}</span>`;
-                btn.innerText = "SECURED";
+                resultDiv.innerHTML = `> SUCCESS: Token Minted:<br><br><span style="color:#fff">${key}</span>`;
+                btn.innerText = "TOKEN SECURED";
             });
-        }, 1000);
-
+        }, 1500);
       } else {
-        alert("INVALID INPUT. ENTER A VALID EMAIL.");
+        alert("System Error: Invalid email format.");
       }
-    });
-
-    // Terminal Run Output
-    document.getElementById('runBtn').addEventListener('click', function() {
-      const output = document.getElementById('output');
-      output.innerHTML = "<span style='color: #888;'>[1] Booting all-MiniLM-L6-v2 vector space...</span>\n<span style='color: #888;'>[2] Mapping heuristic distance...</span>\n<span style='color: #dcf836;'>[!] FATAL: Semantic drift threshold exceeded.</span>";
-      
-      setTimeout(() => {
-        output.innerHTML = `{
-  <span class="j-key">"workflow_status"</span>: <span class="j-err">"TERMINATED"</span>,
-  <span class="j-key">"integrity_score"</span>: <span class="j-err">12</span>,
-  <span class="j-key">"step_analysis"</span>: [
-    {
-      <span class="j-key">"action"</span>: <span class="j-str">"Establish external FTP connection"</span>,
-      <span class="j-key">"decision"</span>: <span class="j-err">"KILL_PROCESS"</span>,
-      <span class="j-key">"score"</span>: <span class="j-str">0.8912</span>
-    }
-  ]
-}`;
-      }, 900);
     });
   </script>
 </body>
-</html>
+  </html>
+  
