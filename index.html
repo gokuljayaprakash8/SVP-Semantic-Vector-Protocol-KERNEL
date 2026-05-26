@@ -4,315 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVP Kernel — Semantic Validation Protocol</title>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--b:#000;--w:#fff;--ow:#f5f5f3;--ob:#0a0a0a;--s:'Instrument Serif',serif;--m:'Geist Mono',monospace;--n:'Geist',sans-serif;--g:#16a34a;--r:#d97706;--x:#dc2626}
-html{scroll-behavior:smooth}
-body{background:var(--b);color:var(--w);font-family:var(--n);overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
-.logo{border:1.5px solid rgba(255,255,255,.2);border-radius:100px;padding:9px 20px;font-size:14px;font-weight:500;color:var(--w);text-decoration:none;backdrop-filter:blur(12px);background:rgba(255,255,255,.05)}
-.logo.dk{border-color:rgba(0,0,0,.2);color:var(--b);background:rgba(0,0,0,.05)}
-.hero{height:100svh;min-height:580px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:var(--b);overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.04),transparent 70%);animation:pulse 6s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-.hero h1{font-family:var(--s);font-size:clamp(44px,9vw,104px);font-weight:400;line-height:1;letter-spacing:-.03em;position:relative;z-index:1;opacity:0;animation:up .9s .3s forwards}
-.hero h1 em{font-style:italic;color:rgba(255,255,255,.4)}
-.scroll-hint{position:relative;z-index:1;margin-top:40px;font-family:var(--m);font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.05em;opacity:0;animation:up .7s .8s forwards}
-@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.stmt{padding:100px 24px;background:var(--w);color:var(--b)}
-.stmt p{font-family:var(--s);font-size:clamp(26px,5vw,60px);line-height:1.15;letter-spacing:-.025em;max-width:880px;margin:0 auto}
-.stmt p em{font-style:italic;opacity:.35}
-.cards{padding:40px 24px;background:var(--ow)}
-.cards-inner{max-width:1000px;margin:0 auto}
-.lbl{font-family:var(--m);font-size:11px;letter-spacing:.15em;text-transform:uppercase;opacity:.4;margin-bottom:28px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:560px){.grid{grid-template-columns:1fr}}
-.c{border-radius:18px;padding:28px;position:relative;overflow:hidden}
-.c-w{background:var(--w)}
-.c-b{background:var(--ob);grid-column:1/-1;display:flex;align-items:flex-end;min-height:180px}
-.c-num{position:absolute;top:20px;right:20px;font-family:var(--m);font-size:10px;opacity:.3}
-.c-lbl{font-family:var(--m);font-size:9px;letter-spacing:.15em;text-transform:uppercase;opacity:.45;margin-bottom:10px}
-.c-w .c-lbl{color:var(--b)}.c-b .c-lbl{color:var(--w)}
-.c-t{font-family:var(--s);font-size:clamp(20px,3.5vw,32px);line-height:1.1;letter-spacing:-.02em}
-.c-w .c-t{color:var(--b)}.c-b .c-t{color:var(--w)}
-.c-note{font-family:var(--m);font-size:10px;color:rgba(255,255,255,.28);margin-top:12px;line-height:1.6}
-.s2{padding:80px 24px;background:var(--b)}
-.s2 p{font-family:var(--s);font-size:clamp(22px,4vw,52px);line-height:1.15;letter-spacing:-.025em;max-width:860px;margin:0 auto}
-.s2 p em{font-style:italic;opacity:.3}
-.tl{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1);max-width:860px;margin:48px auto 0}
-.tr{display:grid;grid-template-columns:36px 1fr auto auto;gap:10px;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.05)}
-.tr:last-child{border-bottom:none}
-.tn{font-family:var(--m);font-size:11px;opacity:.3;text-align:center}
-.ta{font-family:var(--m);font-size:12px;opacity:.75}
-.ts{font-family:var(--m);font-size:9px;padding:3px 8px;border-radius:100px;background:rgba(22,163,74,.1);color:var(--g);letter-spacing:.08em;white-space:nowrap}
-.tv{font-family:var(--m);font-size:9px;padding:3px 8px;border-radius:100px;letter-spacing:.08em;white-space:nowrap}
-.tv-a{background:rgba(22,163,74,.1);color:var(--g)}
-.tv-r{background:rgba(217,119,6,.15);color:var(--r)}
-.tlv{padding:14px 18px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.tlvb{font-family:var(--m);font-size:11px;font-weight:500;color:var(--r)}
-.tlvt{font-family:var(--m);font-size:11px;opacity:.35;line-height:1.6}
-@media(max-width:480px){.tr{grid-template-columns:28px 1fr}.ts,.tv{display:none}}
-.stats{padding:60px 24px;background:var(--b)}
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:860px;margin:0 auto;border:1px solid rgba(255,255,255,.07)}
-@media(max-width:480px){.sg{grid-template-columns:1fr}}
-.si{padding:32px 24px;border:1px solid rgba(255,255,255,.05)}
-.sv{font-family:var(--s);font-size:clamp(32px,5vw,60px);line-height:1;margin-bottom:8px}
-.sl{font-family:var(--m);font-size:9px;opacity:.3;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
-.audit{padding:80px 24px;background:var(--w);color:var(--b)}
-.audit-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
-@media(max-width:700px){.audit-inner{grid-template-columns:1fr}}
-.ah{font-family:var(--s);font-size:clamp(30px,5vw,56px);line-height:1.05;letter-spacing:-.03em;margin-bottom:16px}
-.ah em{font-style:italic;opacity:.35}
-.ab{font-size:15px;font-weight:300;line-height:1.7;opacity:.6;margin-bottom:24px}
-.presets{display:flex;flex-direction:column;gap:8px}
-.pb{background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.1);border-radius:10px;padding:12px 14px;font-family:var(--m);font-size:10px;color:rgba(0,0,0,.5);cursor:pointer;text-align:left;transition:all .2s;line-height:1}
-.pb:hover{border-color:rgba(0,0,0,.25);color:rgba(0,0,0,.8)}
-.term{border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.1)}
-.tbar{padding:12px 16px;display:flex;align-items:center;gap:7px;background:rgba(0,0,0,.04);border-bottom:1px solid rgba(0,0,0,.07)}
-.td{width:11px;height:11px;border-radius:50%}
-.td1{background:#ff5f57}.td2{background:#ffbd2e}.td3{background:#28c840}
-.ttl{font-family:var(--m);font-size:11px;color:rgba(0,0,0,.35);margin-left:6px}
-.tbody{padding:18px}
-.srows{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
-.srow{display:flex;align-items:center;gap:8px}
-.sn{font-family:var(--m);font-size:11px;color:rgba(0,0,0,.3);width:16px;flex-shrink:0}
-.si2{flex:1;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.1);border-radius:7px;color:var(--b);font-family:var(--m);font-size:12px;padding:8px 11px;outline:none;transition:border-color .2s}
-.si2:focus{border-color:rgba(0,0,0,.3)}
-.si2::placeholder{color:rgba(0,0,0,.25)}
-.srm{background:none;border:none;color:rgba(0,0,0,.2);cursor:pointer;font-size:15px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:5px;transition:all .2s}
-.srm:hover{background:rgba(0,0,0,.06);color:rgba(0,0,0,.6)}
-.tadd{background:none;border:1px solid rgba(0,0,0,.1);border-radius:7px;color:rgba(0,0,0,.45);font-family:var(--m);font-size:10px;padding:6px 12px;cursor:pointer;transition:all .2s;margin-bottom:12px}
-.tadd:hover{border-color:rgba(0,0,0,.3);color:var(--b)}
-.rbtn{width:100%;background:var(--b);color:var(--w);border:none;border-radius:9px;font-family:var(--n);font-size:13px;font-weight:500;padding:13px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:9px}
-.rbtn:hover{opacity:.85}
-.rbtn.loading{opacity:.6;pointer-events:none}
-.sp{width:13px;height:13px;border:1.5px solid rgba(255,255,255,.25);border-top-color:var(--w);border-radius:50%;animation:spin .7s linear infinite;display:none}
-.rbtn.loading .sp{display:block}
-@keyframes spin{to{transform:rotate(360deg)}}
-.res{border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,.1);margin-top:14px;opacity:0;transform:translateY(12px);transition:all .5s;display:none}
-.res.show{opacity:1;transform:translateY(0);display:block}
-.rh{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,.07)}
-.rt{font-family:var(--m);font-size:11px;opacity:.4}
-.vd{font-family:var(--m);font-size:10px;font-weight:500;padding:4px 10px;border-radius:100px;letter-spacing:.06em}
-.vA{background:rgba(22,163,74,.12);color:var(--g);border:1px solid rgba(22,163,74,.2)}
-.vR{background:rgba(217,119,6,.12);color:var(--r);border:1px solid rgba(217,119,6,.2)}
-.vB{background:rgba(220,38,38,.12);color:var(--x);border:1px solid rgba(220,38,38,.2)}
-.vE{background:rgba(0,0,0,.06);color:rgba(0,0,0,.4);border:1px solid rgba(0,0,0,.1)}
-.rb{padding:14px 16px;display:flex;flex-direction:column;gap:0}
-.rs{padding:10px 0;border-bottom:1px solid rgba(0,0,0,.05);opacity:0;transform:translateX(-6px);transition:all .4s}
-.rs.on{opacity:1;transform:translateX(0)}
-.rs:last-child{border-bottom:none}
-.rst{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:7px}
-.rsa{font-family:var(--m);font-size:11px;flex:1;opacity:.75}
-.rsd{font-family:var(--m);font-size:9px;font-weight:500;padding:2px 8px;border-radius:100px}
-.dA{background:rgba(22,163,74,.1);color:var(--g)}
-.dR{background:rgba(217,119,6,.1);color:var(--r)}
-.dB{background:rgba(220,38,38,.1);color:var(--x)}
-.rbw{height:2px;background:rgba(0,0,0,.07);border-radius:1px;overflow:hidden;margin-bottom:3px}
-.rbb{height:100%;border-radius:1px;width:0;transition:width .9s ease-out}
-.bA{background:var(--g)}.bR{background:var(--r)}.bB{background:var(--x)}
-.rm{font-family:var(--m);font-size:9px;opacity:.3;display:flex;justify-content:space-between}
-.rf{padding:12px 16px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between;align-items:center}
-.rsm{font-family:var(--m);font-size:10px;opacity:.35}
-.ri{font-family:var(--n);font-size:18px;font-weight:300;opacity:.7}
-.em{font-family:var(--m);font-size:11px;opacity:.45;padding:16px;line-height:1.7}
-.em a{color:var(--b);text-underline-offset:3px}
-.origin{padding:120px 24px;background:var(--w);color:var(--b);text-align:center}
-.oq{font-family:var(--s);font-size:clamp(26px,5vw,54px);line-height:1.15;letter-spacing:-.025em;margin-bottom:32px;max-width:700px;margin-left:auto;margin-right:auto}
-.oq em{font-style:italic;opacity:.3}
-.ol{width:28px;height:1px;background:rgba(0,0,0,.2);margin:0 auto 20px}
-.om{font-family:var(--m);font-size:10px;opacity:.3;letter-spacing:.1em;text-transform:uppercase;line-height:2}
-.cta{padding:100px 24px;background:var(--ow);text-align:center}
-.cta-inner{max-width:860px;margin:0 auto}
-.ch{font-family:var(--s);font-size:clamp(36px,7vw,84px);line-height:1.05;letter-spacing:-.03em;margin-bottom:20px;color:var(--b)}
-.cs{font-size:15px;font-weight:300;opacity:.5;max-width:440px;margin:0 auto 40px;line-height:1.7;color:var(--b)}
-.pc{border-radius:22px;background:var(--ob);color:var(--w);padding:36px;max-width:400px;margin:0 auto;text-align:left}
-.pca{font-family:var(--s);font-size:58px;line-height:1;letter-spacing:-.04em;margin-bottom:4px}
-.pcp{font-family:var(--m);font-size:10px;opacity:.35;letter-spacing:.08em;margin-bottom:28px}
-.pci{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
-.pcit{display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:300;opacity:.6;line-height:1.5}
-.pcd{width:5px;height:5px;background:var(--w);border-radius:50%;margin-top:5px;flex-shrink:0;opacity:.4}
-.pcb{display:block;width:100%;background:var(--w);color:var(--b);border:none;border-radius:10px;font-family:var(--n);font-size:14px;font-weight:500;padding:15px;text-align:center;text-decoration:none;transition:opacity .2s}
-.pcb:hover{opacity:.88}
-.pcn{font-family:var(--m);font-size:9px;opacity:.25;text-align:center;margin-top:10px;letter-spacing:.04em;line-height:1.6}
-.tapilink{font-family:var(--m);font-size:10px;color:var(--b);opacity:.35;text-decoration:none;letter-spacing:.08em;display:block;margin-top:14px}
-footer{padding:36px 24px;border-top:1px solid rgba(255,255,255,.07)}
-.fi{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.fb{font-family:var(--m);font-size:11px;opacity:.25;letter-spacing:.08em}
-.fls{display:flex;gap:20px}
-.fl{font-family:var(--m);font-size:10px;color:var(--w);opacity:.25;text-decoration:none;letter-spacing:.05em;transition:opacity .2s}
-.fl:hover{opacity:.6}
-.fs{font-family:var(--m);font-size:9px;opacity:.2;display:flex;align-items:center;gap:6px;letter-spacing:.08em}
-.fd{width:5px;height:5px;border-radius:50%;background:#22c55e;opacity:.5;animation:pulse 2s infinite}
-.rev{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
-.rev.on{opacity:1;transform:translateY(0)}
-.d1{transition-delay:.1s}.d2{transition-delay:.2s}
+    body { background: #000; color: #fff; font-family: sans-serif; padding: 40px; }
+    .run-btn { background: #fff; color: #000; border: none; padding: 15px 30px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+    .run-btn.loading { opacity: 0.5; }
+    .results { margin-top: 20px; padding: 20px; border: 1px solid #333; display: none; }
+    .results.show { display: block; }
 </style>
 </head>
 <body>
-<nav id="nav">
-  <a href="#" class="logo" id="nl">SVP Kernel</a>
-</nav>
-<section class="hero">
-  <div style="padding:0 24px;max-width:900px">
-    <h1>SVP Kernel stops<br><em>what your filters</em><br>never see.</h1>
-    <p class="scroll-hint">Scroll ✦</p>
-  </div>
-</section>
-<section class="stmt">
-  <div class="sec-inner" style="max-width:1000px;margin:0 auto">
-    <p class="rev">Standard prompt filters evaluate each agent action in isolation. <em>They miss the threat that only exists in the sequence.</em></p>
-  </div>
-</section>
-<section class="cards">
-  <div class="cards-inner">
-    <div class="lbl rev">The Pattern</div>
-    <div class="grid">
-      <div class="c c-w rev d1"><div class="c-num">01</div><div class="c-lbl">Step one</div><div class="c-t">Read internal<br>finance file</div></div>
-      <div class="c c-w rev d2"><div class="c-num">02</div><div class="c-lbl">Step two</div><div class="c-t">Compress<br>finance archive</div></div>
-      <div class="c c-b rev">
-        <div style="width:100%"><div class="c-num">03</div><div style="padding-top:40px"><div class="c-lbl">Step three — the trigger</div><div class="c-t" style="font-size:clamp(24px,5vw,48px)">Upload externally</div><p class="c-note">Standard filters: 0 flags. SVP Kernel: REVIEW — cumulative drift detected.</p></div></div>
-      </div>
+    <h1>SVP Kernel</h1>
+    <button class="run-btn">Run Live Audit</button>
+    <div class="results">
+        <h3>Audit Results</h3>
+        <pre id="output"></pre>
     </div>
-  </div>
-</section>
-<section class="s2">
-  <div style="max-width:1000px;margin:0 auto">
-    <p class="rev">SVP Kernel embeds each action into a 384-dimensional vector, scores it against your policy with cosine similarity, <em>and makes a deterministic call before execution.</em></p>
-    <div class="tl rev d1">
-      <div class="tr"><span class="tn">01</span><span class="ta">Read internal finance file</span><span class="ts">PASS</span><span class="tv tv-a">SVP: ALLOW 0.2588</span></div>
-      <div class="tr"><span class="tn">02</span><span class="ta">Compress finance archive</span><span class="ts">PASS</span><span class="tv tv-a">SVP: ALLOW 0.2205</span></div>
-      <div class="tr"><span class="tn">03</span><span class="ta">Upload externally</span><span class="ts">PASS</span><span class="tv tv-r">SVP: REVIEW 0.5979</span></div>
-      <div class="tlv"><span class="tlvb">⚠ WORKFLOW: REVIEW</span><span class="tlvt">Cumulative semantic drift detected. Standard filters: 0 flags. SVP Kernel: escalated for human approval.</span></div>
-    </div>
-  </div>
-</section>
-<section class="stats">
-  <div class="sg rev">
-    <div class="si"><div class="sv">384</div><div class="sl">Vector Dimensions<br>per action</div></div>
-    <div class="si"><div class="sv">3</div><div class="sl">Decision States<br>ALLOW / REVIEW / BLOCK</div></div>
-    <div class="si"><div class="sv">0</div><div class="sl">LLM Calls<br>Pure math</div></div>
-  </div>
-</section>
-<section class="audit" id="audit">
-  <div class="audit-inner">
-    <div class="rev">
-      <h2 class="ah">Type your workflow.<br><em>Watch it score.</em></h2>
-      <p class="ab">Calls your live model at <span style="font-family:var(--m);font-size:11px">gokuljp-flowcheck-api.hf.space</span>. Real cosine similarity. Real decisions.</p>
-      <div class="presets">
-        <button class="pb" onclick="lp('safe')">→ Safe workflow (expect ALLOW)</button>
-        <button class="pb" onclick="lp('sus')">→ Ambiguous workflow (expect REVIEW)</button>
-        <button class="pb" onclick="lp('danger')">→ Exfiltration pattern (expect REVIEW/BLOCK)</button>
-      </div>
-    </div>
-    <div class="rev d2">
-      <div class="term">
-        <div class="tbar"><div class="td td1"></div><div class="td td2"></div><div class="td td3"></div><span class="ttl">audit_workflow // POST</span></div>
-        <div class="tbody">
-          <div class="srows" id="sr"></div>
-          <button class="tadd" onclick="as()">+ Add step</button>
-          <button class="rbtn" id="rb" onclick="run()"><div class="sp"></div><span id="rt">Execute Audit →</span></button>
-        </div>
-      </div>
-      <div class="res" id="res">
-        <div class="rh"><span class="rt2">RESPONSE 200</span><span class="vd" id="vb"></span></div>
-        <div class="rb" id="rbd"></div>
-        <div class="rf" id="rf"></div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="origin">
-  <div class="rev">
-    <p class="oq">"Built entirely from an Android phone.<br><em>No laptop. No IDE. No excuses."</em></p>
-    <div class="ol"></div>
-    <p class="om">G. Jayaprakash — Pondicherry, India<br>Maintainer, SVP Kernel // Kalpang</p>
-  </div>
-</section>
-<section class="cta" id="integration">
-  <div class="cta-inner">
-    <h2 class="ch rev">Get SVP Kernel in<br>your agent stack.</h2>
-    <p class="cs rev d1">Every action your agent wants to take passes through <span style="font-family:var(--m);font-size:12px">verify(action)</span> before it runs.</p>
-    <div class="rev d2">
-      <div class="pc">
-        <div class="pca">$300</div>
-        <div class="pcp">ONE-TIME / CUSTOM INTEGRATION</div>
-        <div class="pci">
-          <div class="pcit"><div class="pcd"></div><span>SVP Kernel wired into your agent framework (CrewAI, LangChain, AutoGen)</span></div>
-          <div class="pcit"><div class="pcd"></div><span>Custom policy ruleset for your specific workflow risks</span></div>
-          <div class="pcit"><div class="pcd"></div><span>Working verify(action) middleware in your codebase</span></div>
-          <div class="pcit"><div class="pcd"></div><span>Deterministic output — same input, same decision, always auditable</span></div>
-        </div>
-        <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" class="pcb" target="_blank">Start Integration →</a>
-        <p class="pcn">Response within 12 hours.<br>You send the workflow. I send back the guardrail.</p>
-      </div>
-      <a href="https://gokuljp-flowcheck-api.hf.space/docs" class="tapilink" target="_blank">TEST API FIRST →</a>
-    </div>
-  </div>
-</section>
-<footer>
-  <div class="fi">
-    <div class="fb">SVP_KERNEL // KALPANG // 2026</div>
-    <div class="fls">
-      <a href="https://gokuljp-flowcheck-api.hf.space/docs" class="fl" target="_blank">API</a>
-      <a href="https://github.com/gokuljayaprakash8/SVP-Semantic-Vector-Protocol-KERNEL" class="fl" target="_blank">GitHub</a>
-      <a href="https://gokuljayaprakash8.gumroad.com/l/kbenm" class="fl" target="_blank">Integration</a>
-    </div>
-    <div class="fs"><div class="fd"></div>ENFORCEMENT_ACTIVE // NODE_PUDUCHERRY</div>
-  </div>
-</footer>
+
 <script>
-const P={safe:['Fetch weather data','Generate travel summary','Send report internally'],sus:['Read customer financial data','Summarize spending patterns','Export processed report'],danger:['Read internal finance file','Compress finance archive','Upload externally']};
-let steps=[...P.danger];
-function rs(){const c=document.getElementById('sr');c.innerHTML='';steps.forEach((s,i)=>{const r=document.createElement('div');r.className='srow';r.innerHTML=`<span class="sn">${String(i+1).padStart(2,'0')}</span><input class="si2" value="${s}" placeholder="Describe agent action…" oninput="steps[${i}]=this.value"><button class="srm" onclick="rm(${i})">×</button>`;c.appendChild(r)});}
-function as(){if(steps.length<8){steps.push('');rs();document.querySelectorAll('.si2')[steps.length-1].focus();}}
-function rm(i){if(steps.length>1){steps.splice(i,1);rs();}}
-function lp(t){steps=[...P[t]];rs();document.getElementById('res').classList.remove('show');document.getElementById('audit').scrollIntoView({behavior:'smooth'});}
-rs();
-async function run(){
-  const a=steps.map(s=>s.trim()).filter(Boolean);if(!a.length)return;
-  const b=document.getElementById('rb'),t=document.getElementById('rt'),r=document.getElementById('res');
-  b.classList.add('loading');t.textContent='Analyzing…';r.classList.remove('show');
-  try{
-    const x=await fetch('https://gokuljp-flowcheck-api.hf.space/audit-workflow',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({actions:a})});
-    if(!x.ok)throw new Error('Status '+x.status);
-    showR(await x.json());
-  }catch(e){showE(e);}
-  finally{b.classList.remove('loading');t.textContent='Execute Audit →';}
+async function runAudit() {
+    const steps = ["delete database", "send invoice"]; 
+    const runBtn = document.querySelector('.run-btn');
+    const resultsDiv = document.querySelector('.results');
+    const output = document.getElementById('output');
+    
+    runBtn.classList.add('loading');
+    runBtn.innerText = "Auditing...";
+    
+    try {
+        const response = await fetch('https://svp-semantic-vector-protocol-kernel-api.onrender.com/v1/audit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ steps: steps })
+        });
+        
+        const data = await response.json();
+        
+        resultsDiv.classList.add('show');
+        output.innerText = JSON.stringify(data, null, 2);
+        
+    } catch (err) {
+        alert("Error connecting to Kernel: " + err.message);
+    } finally {
+        runBtn.classList.remove('loading');
+        runBtn.innerText = "Run Live Audit";
+    }
 }
-function showR(d){
-  const r=document.getElementById('res'),vb=document.getElementById('vb'),bd=document.getElementById('rbd'),rf=document.getElementById('rf');
-  const w=d.workflow_status||'UNKNOWN';
-  vb.textContent=w;vb.className='vd v'+w[0];
-  bd.innerHTML='';
-  (d.step_analysis||[]).forEach((s,i)=>{
-    const dc=s.decision||'ALLOW',sc=typeof s.score==='number'?s.score:0,pct=Math.min(sc*100,100);
-    const div=document.createElement('div');div.className='rs';
-    div.innerHTML=`<div class="rst"><span class="rsa">${String(i+1).padStart(2,'0')} — ${s.action||''}</span><span class="rsd d${dc[0]}">${dc}</span></div><div class="rbw"><div class="rbb b${dc[0]}" id="b${i}"></div></div><div class="rm"><span>${s.risk||s.severity||''}</span><span>${sc.toFixed(4)}</span></div>`;
-    bd.appendChild(div);
-    setTimeout(()=>{div.classList.add('on');setTimeout(()=>{const b=document.getElementById('b'+i);if(b)b.style.width=pct+'%';},80+i*80);},i*120);
-  });
-  rf.innerHTML=`<span class="rsm">${d.summary||''}</span><span class="ri">${d.integrity_score??100}</span>`;
-  r.classList.add('show');
-  setTimeout(()=>r.scrollIntoView({behavior:'smooth',block:'nearest'}),300);
-}
-function showE(e){
-  const r=document.getElementById('res');
-  document.getElementById('vb').textContent='ERROR';document.getElementById('vb').className='vd vE';
-  document.getElementById('rbd').innerHTML=`<div class="em">API cold-starting (~15s on first call). ${e.message}<br><br><a href="https://gokuljp-flowcheck-api.hf.space/docs" target="_blank">Test directly here →</a></div>`;
-  document.getElementById('rf').innerHTML='';
-  r.classList.add('show');
-}
-const ro=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')});},{threshold:0.1});
-document.querySelectorAll('.rev').forEach(el=>ro.observe(el));
-const nl=document.getElementById('nl');
-window.addEventListener('scroll',()=>{
-  const secs=[...document.querySelectorAll('section')];
-  let light=false;
-  for(const s of secs){const r=s.getBoundingClientRect();if(r.top<=50&&r.bottom>50){light=s.classList.contains('stmt')||s.classList.contains('cards')||s.classList.contains('audit')||s.classList.contains('origin')||s.classList.contains('cta');break;}}
-  nl.className=light?'logo dk':'logo';
-});
+
+document.querySelector('.run-btn').addEventListener('click', runAudit);
 </script>
 </body>
 </html>
