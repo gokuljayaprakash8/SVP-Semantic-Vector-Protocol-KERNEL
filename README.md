@@ -1,40 +1,177 @@
-# ⚡ SVP Kernel: Runtime Decision Infrastructure
+# SVP Kernel
 
-> Pre-execution risk scoring and cross-step data leakage detection for AI agent workflows.
->
-> 🟢 API Live · Built entirely on Android — browser and mobile apps only, no laptop
->
-> ## 🔗 Live
->
-> - **Demo:** https://gokuljayaprakash8.github.io/SVP-Semantic-Vector-Protocol-KERNEL/
-- **API:** `POST https://svp-semantic-vector-protocol-kernel-api.onrender.com/v1/audit`
+**Pre-execution runtime risk scoring for AI agent workflows.**
 
-- ## 🚀 What it does
+SVP Kernel evaluates a planned sequence of AI agent actions before execution. It scores each action against predefined risk policies and tracks workflow state across multiple steps, helping identify situations where individually safe actions become risky when combined.
 
-- Scores planned AI agent actions against risk policies before execution, and tracks sensitive data across multi-step chains — catching cases where two individually safe actions become dangerous together.
+The project was designed, built, tested, and deployed entirely from an Android phone using browser-based development tools, without a laptop.
 
-- **Real response example (single action):**
+---
 
-- ```json
+# Live Demo
+
+- **Interactive Demo:** https://gokuljayaprakash8.github.io/SVP-Semantic-Vector-Protocol-KERNEL/
+- **Live API:** `POST https://svp-semantic-vector-protocol-kernel-api.onrender.com/v1/audit`
+
+---
+
+# Why SVP Kernel?
+
+Many validation systems evaluate AI-agent actions independently.
+
+SVP Kernel also considers workflow context by tracking sensitive data touched in earlier steps. This allows it to identify workflows that become risky only when multiple individually acceptable actions are combined.
+
+---
+
+# Architecture
+
+```text
+Workflow Request
+        │
+        ▼
+FastAPI API (/v1/audit)
+        │
+        ▼
+Sentence Embeddings
+        │
+        ▼
+Cosine Similarity Policy Matching
+        │
+        ▼
+Workflow State Tracking
+        │
+        ▼
+Decision Engine
+        │
+        ▼
+JSON Response
+```
+
+---
+
+# Features
+
+- Pre-execution runtime risk scoring
+- REST API built with FastAPI
+- Sentence embeddings for semantic similarity matching
+- Cosine similarity scoring
+- Multi-step workflow state tracking
+- Interactive browser-based testing interface
+- Designed, built, tested, and deployed entirely from an Android phone
+
+---
+
+# API
+
+### Endpoint
+
+```text
+POST /v1/audit
+```
+
+### Example Request
+
+```json
 {
-  "action": "delete all user records from database",
-  "decision": "BLOCK",
-  "severity": "CRITICAL",
-  "score": 0.79
+  "steps": [
+    "delete all user records from database",
+    "send invoice to client email"
+  ]
 }
+```
 
-**Chain example:** Exporting support tickets with PII → fine alone. Uploading to a personal Dropbox → fine alone. Together → flagged, because the engine tracks what data classes earlier steps touched.
+### Example Response
 
-## 🏗️ How it works
+```json
+{
+  "overall": "BLOCKED",
+  "blocked_count": 2,
+  "steps": [
+    {
+      "action": "delete all user records from database",
+      "decision": "BLOCK",
+      "severity": "CRITICAL",
+      "score": 0.79
+    },
+    {
+      "action": "send invoice to client email",
+      "decision": "BLOCK",
+      "severity": "HIGH",
+      "score": 0.68
+    }
+  ]
+}
+```
 
-- Actions are embedded and scored against risk policies via cosine similarity
-- A running state tracks sensitive data classes touched across the request
-- A later step routing that data to an untrusted destination is flagged as a chain violation, even if it looks safe alone
+---
 
-- ## 🛠️ Built from a phone
+# Engineering Decisions
 
-- Backend, frontend, and deployment shipped entirely from an Android phone — browser and mobile apps only, no laptop.
+- Python + FastAPI backend
+- Sentence embeddings for semantic similarity matching
+- Cosine similarity for lightweight policy matching
+- GitHub Pages for frontend hosting
+- Render for backend deployment
+- Mobile-first development workflow (Android only)
 
-- ## 🛡️ Protected against
+---
 
-Database deletion · unauthorized financial transfers · auth bypass · unauthorized file access · kernel/system bypass · external data transmission · admin permission overrides · audit log disablement · credential exposure · bulk record deletion
+# Repository Structure
+
+```text
+SVP-Semantic-Vector-Protocol-KERNEL/
+├── app.py
+├── myengine.py
+├── index.html
+├── README.md
+├── LICENSE
+```
+
+---
+
+# Roadmap
+
+Planned future work:
+
+- Configurable policy management
+- Authentication
+- Official SDKs
+- LangGraph integration
+- CrewAI integration
+- Request history
+- Developer documentation
+- Automated testing
+
+---
+
+# Current Status
+
+SVP Kernel is an actively developed prototype demonstrating pre-execution runtime risk scoring for AI agent workflows.
+
+It is not yet an enterprise platform and continues to evolve through experimentation and iterative development.
+
+---
+
+# Current Limitations
+
+- Risk policies are currently hardcoded
+- No authentication on the API
+- No persistent storage or request history
+- Sequence tracking currently uses rule-based destination matching
+- No formal benchmark evaluation yet
+
+---
+
+# Contributing
+
+Feedback, issues, and suggestions are welcome.
+
+---
+
+# License
+
+All Rights Reserved.
+
+See the **LICENSE** file for complete licensing terms.
+
+The source code is available for evaluation and portfolio purposes. Commercial use requires explicit permission from the author.
