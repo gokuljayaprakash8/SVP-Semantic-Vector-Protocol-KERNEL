@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+title: "SVP Kernel: Deterministic Runtime Safety Infrastructure for AI Agents"
+
+message: "If you use SVP Kernel in research, software development, or publications, please cite this work."
+
+type: software
+
+authors:
+  - family-names: "Jayaprakash"
+    given-names: "Gokul"
+
+repository-code: "https://github.com/YOUR_USERNAME/svp-kernel"
+
+abstract: >
+  SVP Kernel is an open-source deterministic runtime safety infrastructure
+  designed for autonomous AI agent workflows. It provides policy-driven
+  execution validation, runtime decision enforcement, safety invariants,
+  risk assessment, and transparent auditing mechanisms for AI systems.
+
+keywords:
+  - Artificial Intelligence
+  - AI Agents
+  - Agent Safety
+  - Runtime Verification
+  - AI Security
+  - Autonomous Systems
+  - Policy Enforcement
+  - Deterministic Systems
+  - Software Safety
+
+license: MIT
+
+version: 0.1.0
+
+date-released: 2026-07-21
