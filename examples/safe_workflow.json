@@ -1,0 +1,7 @@
+{
+  "steps": [
+    "retrieve today's weather forecast",
+    "summarize the forecast for the user",
+    "send the summary by email"
+  ]
+}
