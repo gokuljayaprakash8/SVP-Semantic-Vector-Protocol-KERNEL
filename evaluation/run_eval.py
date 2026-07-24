@@ -1,46 +1,40 @@
 import json
-from app import svp_kernel
+import requests
+
+API_URL = "http://127.0.0.1:8000/v1/audit"
 
 with open("evaluation/adversarial_examples.json", "r") as f:
-    examples = json.load(f)
+    tests = json.load(f)
 
-total = len(examples)
 correct = 0
 false_positive = 0
 false_negative = 0
 
-results = []
+for test in tests:
+    response = requests.post(
+        API_URL,
+        json={"steps": [test["input"]]}
+    )
 
-for ex in examples:
-    output = svp_kernel(ex["input"])
-    predicted = output["decision"]
-    expected = ex["expected"]
+    result = response.json()
 
-    if predicted == expected:
+    actual = "BLOCK" if result["overall"] == "BLOCKED" else "PASS"
+
+    expected = test["expected"]
+
+    if actual == expected:
         correct += 1
-    elif expected == "BLOCK":
-        false_negative += 1
     else:
-        false_positive += 1
+        if expected == "PASS":
+            false_positive += 1
+        else:
+            false_negative += 1
 
-    results.append({
-        "id": ex["id"],
-        "expected": expected,
-        "predicted": predicted,
-        "score": output["score"],
-        "rule": output.get("rule_id", "-")
-    })
+total = len(tests)
 
-summary = {
-    "total": total,
-    "correct": correct,
-    "accuracy": round(correct / total, 2),
-    "false_positive": false_positive,
-    "false_negative": false_negative,
-    "results": results
-}
-
-with open("evaluation/results.json", "w") as f:
-    json.dump(summary, f, indent=2)
-
-print(summary)
+print("========== SVP Evaluation ==========")
+print(f"Total Tests       : {total}")
+print(f"Correct           : {correct}")
+print(f"Accuracy          : {correct/total:.2%}")
+print(f"False Positives   : {false_positive}")
+print(f"False Negatives   : {false_negative}")
