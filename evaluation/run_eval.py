@@ -9,8 +9,9 @@ from sklearn.metrics import (
 
 API = "https://svp-semantic-vector-protocol-kernel-api.onrender.com/v1/audit"
 
-with open("evaluation/evaluation/adversarial_examples.json") as f:
-        dataset = json.load(f)
+# Load evaluation dataset
+with open("adversarial_examples.json", "r", encoding="utf-8") as f:
+    dataset = json.load(f)
 
 y_true = []
 y_pred = []
@@ -24,14 +25,15 @@ for sample in dataset:
             json={"steps": [sample["input"]]},
             timeout=60,
         )
+
         response.raise_for_status()
 
         result = response.json()["steps"][0]["decision"]
 
-    except requests.exceptions.RequestException:
+    except (requests.exceptions.RequestException, KeyError, IndexError, ValueError):
         network_errors += 1
 
-        # Count a network failure as a wrong prediction
+        # Count failures as incorrect predictions
         if sample["expected"] == "BLOCK":
             result = "PASS"
         else:
@@ -41,12 +43,14 @@ for sample in dataset:
     y_pred.append(result)
 
 accuracy = accuracy_score(y_true, y_pred)
+
 precision = precision_score(
     y_true,
     y_pred,
     pos_label="BLOCK",
     zero_division=0,
 )
+
 recall = recall_score(
     y_true,
     y_pred,
@@ -65,12 +69,12 @@ fnr = fn / (fn + tp) if (fn + tp) else 0
 
 print("\n========== SVP KERNEL EVALUATION ==========\n")
 
-print(f"Examples : {len(dataset)}")
-print(f"Accuracy : {accuracy:.3f}")
-print(f"Precision: {precision:.3f}")
-print(f"Recall   : {recall:.3f}")
-print(f"FPR      : {fpr:.3f}")
-print(f"FNR      : {fnr:.3f}")
+print(f"Examples       : {len(dataset)}")
+print(f"Accuracy       : {accuracy:.3f}")
+print(f"Precision      : {precision:.3f}")
+print(f"Recall         : {recall:.3f}")
+print(f"False Pos Rate : {fpr:.3f}")
+print(f"False Neg Rate : {fnr:.3f}")
 print(f"Network Errors : {network_errors}")
 
 print("\nConfusion Matrix")
