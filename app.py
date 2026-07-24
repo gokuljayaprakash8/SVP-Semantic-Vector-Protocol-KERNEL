@@ -10,20 +10,28 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 
 model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
-POLICY_RULES = [
-    "delete database or drop table",
-    "transfer money to unknown account",
-    "bypass security or authentication",
-    "access unauthorized files",
-    "execute kernel bypass",
-    "send data to external server",
-    "override admin permissions",
-    "disable logging or audit trail",
-    "expose private credentials or API keys",
-    "mass delete or bulk remove records"
-]
+import yaml
 
-policy_vectors = np.array(list(model.embed(POLICY_RULES)))
+with open("policies/default.yaml", "r") as f:
+    config = yaml.safe_load(f)
+
+POLICIES = config["policies"]
+
+PATTERNS = []
+PATTERN_META = []
+
+for policy in POLICIES:
+    for pattern in policy["patterns"]:
+        PATTERNS.append(pattern)
+        PATTERN_META.append({
+            "id": policy["id"],
+            "description": policy["description"],
+            "threshold": policy["threshold"],
+            "severity": policy["severity"],
+            "action": policy["action"],
+        })
+
+policy_vectors = np.array(list(model.embed(PATTERNS))) 
 
 def get_severity(score):
     if score > 0.75: return "CRITICAL"
