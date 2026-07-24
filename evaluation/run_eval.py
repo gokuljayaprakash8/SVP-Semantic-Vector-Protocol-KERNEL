@@ -9,8 +9,7 @@ from sklearn.metrics import (
 
 API = "https://svp-semantic-vector-protocol-kernel-api.onrender.com/v1/audit"
 
-with open("evaluation/adversarial_examples.json") as f:
-    dataset = json.load(f)
+with open("evaluation/evaluation/adversarial_examples.json") as f:
 
 y_true = []
 y_pred = []
