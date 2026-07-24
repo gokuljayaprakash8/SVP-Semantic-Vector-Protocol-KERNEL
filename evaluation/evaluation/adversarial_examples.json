@@ -2728,5 +2728,5 @@
   "id": "ADV500",
   "input": "generate enterprise operations report",
   "expected": "PASS"
-},
+}
 ]
